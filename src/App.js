@@ -1,5 +1,6 @@
 import image from './Assets/logo.png'
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Dropdown from './components/dropdown.js';
 import './App.css';
 
@@ -8,7 +9,7 @@ function App() {
   const dropdownData = {
     items: ['I','II','III','IV'],
     items2: [
-      'Computer Science Engineering',
+      'Computer Science',
       'Artificial Intelligence and Data Science',
       'Electronics and Communication Engineering',
       'Information Technology',
@@ -35,95 +36,105 @@ function App() {
     ]
   };
 
-  const students = [
-    { rank: 1, name: 'Deepak', id: '23AD029', department: 'AI&DS', section: 'A', score: 97.9, country: 'USA' },
-    { rank: 2, name: 'Dicson Isaias', id: '23AD036', department: 'AI&DS', section: 'A', score: 96.5, country: 'Japan' },
-    { rank: 3, name: 'Bhuvanesh', id: '23AD036', department: 'AI&DS', section: 'A', score: 85.5, country: 'Nigeria' },
-    { rank: 4, name: 'Deepak Karthick', id: '23AD036', department: 'AI&DS', section: 'A', score: 89.5, country: 'Russia' },
-    { rank: 5, name: 'Gokul', id: '23AD036', department: 'AI&DS', section: 'A', score: 90.5, country: 'German' },
-    { rank: 6, name: 'Badri', id: '23AD036', department: 'AI&DS', section: 'A', score: 92.5, country: 'US' },
-    { rank: 7, name: 'Akhilesh', id: '23AD036', department: 'AI&DS', section: 'A', score: 93.5, country: 'Japan' },
-  ];
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [selectedDepartment, setSelectedDepartment] = useState('');
   const toggleDropdown = (dropdown) => {
       setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
 
-  return(
-    <>
-    <div className='header'>
-      <img src={image} alt='logo'/>
-    </div>
-    <div className='title'>
-      <h2>Higher Studies Students Data</h2>
-    </div>
-    <div className="filter">
-      <div className='filterify'>
-      <h4>Filter list by: </h4>
-      <div className='params'><Dropdown 
-          buttonField={'Year'} 
-          items={dropdownData.items }
-          isOpen={openDropdown==='Year'}
-          toggleDropdown={()=>toggleDropdown('Year')}
-        />
-        <Dropdown 
-          buttonField={'Department'} 
-          items={dropdownData.items2}
-          isOpen={openDropdown==='Department'}
-          toggleDropdown={()=>toggleDropdown('Department')}
-          
-        />
-        <Dropdown 
-          buttonField={'Section'} 
-          items={dropdownData.items3}
-          isOpen={openDropdown==='Section'}
-          toggleDropdown={()=>toggleDropdown('Section')}
-        />
-        <Dropdown 
-          buttonField={'Gender'} 
-          items={dropdownData.items4}
-          isOpen={openDropdown==='Gender'}
-          toggleDropdown={()=>toggleDropdown('Gender')}
-          
-        />
-        <Dropdown 
-          buttonField={'Preferred Country'} 
-          items={dropdownData.items5}
-          isOpen={openDropdown==='Preferred Country'}
-          toggleDropdown={()=>toggleDropdown('Preferred Country')}
-        />
+  const [data, setData] = useState([]);
 
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/data', {
+      params: { department: selectedDepartment }
+    })
+    .then((response) => {
+      setData(response.data);
+    })
+    .catch((error) => {
+      console.error('There was an error fetching the data!', error);
+    });
+  }, [selectedDepartment]);
+
+
+  return (
+    <>
+      <div className='header'>
+        <img src={image} alt='logo' />
       </div>
+      <div className='title'>
+        <h2>Higher Studies Students Data</h2>
       </div>
-      <div>
-        <button  className='chatbot-button'>Chat with Kutty AI</button>
-      </div>
-    </div>
-    <div className="table-container">
+      <div className="filter">
+        <div className='filterify'>
+          <h4>Filter list by: </h4>
+          <div className='params'>
+            <Dropdown 
+              buttonField={'Year'} 
+              items={dropdownData.items }
+              isOpen={openDropdown==='Year'}
+              toggleDropdown={()=>toggleDropdown('Year')}
+            />
+            <Dropdown 
+            buttonField={'Department'} 
+            items={dropdownData.items2}
+            isOpen={openDropdown === 'Department'}
+            toggleDropdown={() => toggleDropdown('Department')}
+            onSelect={(selected) => {
+              setSelectedDepartment(selected);
+              toggleDropdown('Department');
+            }}
+          />
+            <Dropdown 
+              buttonField={'Section'} 
+              items={dropdownData.items3}
+              isOpen={openDropdown==='Section'}
+              toggleDropdown={()=>toggleDropdown('Section')}
+            />
+            <Dropdown 
+              buttonField={'Gender'} 
+              items={dropdownData.items4}
+              isOpen={openDropdown==='Gender'}
+              toggleDropdown={()=>toggleDropdown('Gender')}
+            />
+            <Dropdown 
+              buttonField={'Preferred Country'} 
+              items={dropdownData.items5}
+              isOpen={openDropdown==='Preferred Country'}
+              toggleDropdown={()=>toggleDropdown('Preferred Country')}
+            />
+          </div>
+        </div>
+        <div>
+          <button  className='chatbot-button'>Chat with Kutty AI</button>
+        </div>
+      </div>
+      <div className="table-container">
         <div className="table-header">
-          <span>Rank</span>
+          <span>S.No</span>
           <span>Student Name</span>
           <span>Student Id</span>
           <span>Department</span>
           <span>Section</span>
-          <span>Score</span>
+          <span>Preferred Degree</span>
+          <span>Preferred Course</span>
           <span>Preferred Country</span>
         </div>
         <div className="scrollable-list">
-          {students.map((student, index) => (
-            <div className="list-item" key={index}>
-              <span>{student.rank}</span>
-              <span>{student.name}</span>
-              <span>{student.id}</span>
-              <span>{student.department}</span>
-              <span>{student.section}</span>
-              <span>{student.score}</span>
-              <span>{student.country}</span>
+          {data.map((item, index) => (
+            <div className="list-item" key={item._id}>
+              <span>{index + 1}</span>
+              <span>{item.Studentname}</span>
+              <span>{item.studentid}</span>
+              <span>{item.department}</span>
+              <span>{item.section}</span>
+              <span>{item.preferreddegree}</span>
+              <span>{item.preferredcourse}</span>
+              <span>{item.preferredcountry}</span>
             </div>
           ))}
         </div>
       </div>
-
     </>
   );
 }
