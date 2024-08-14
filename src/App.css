@@ -1,38 +1,125 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+DK+Uloopet:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: poppins,'sans-serif';
+}
+
+.header{
+  background-color: #000066;
+}
+
+.header img{
+  max-width: 300px;
+  padding: 25px;
+}
+
+.title{
+  background-color: #FFF35E;
+  color: #000;
+  margin-top: 35px;
+}
+
+.title h2{
+  padding: 20px;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.3cap;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.filter{
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  margin-top: 35px;
+  padding: 25px;
 }
 
-.App-link {
-  color: #61dafb;
+
+.filter .params{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+
+.filter h4{
+  color: #737373;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.filterify{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.chatbot-button{
+  padding:20px 40px;
+  width: 300px;
+  border:0px;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #b721ff 100%);
+  color:white;
+  cursor: pointer;
+  border-radius:90px;
+  box-shadow: 5px;
+  font-size: medium;
+  font-weight: 500;
+}
+
+.chatbot-button:hover{
+  background: linear-gradient(135deg, #b721ff 0%, #6a11cb 50%, #2575fc 100%);
+}
+
+
+.table-container {
+  margin-top: 45px;
+  width: 100%;
+}
+
+.table-header{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  color: #000;
+  font-weight: 500;
+}
+
+.list-item{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  color: #5e5e6d;
+}
+
+.table-header {
+  background-color: #f0f0f0;
+  border-bottom: 3px solid #D8D8D8;
+}
+
+.table-header span, .list-item span {
+  display: table-cell;
+  padding: 15px;
+  text-align: center;
+}
+
+.list-item {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 25px 0px;
+  cursor: pointer;
+}
+
+.list-item:hover{
+  background-color: rgba(255, 244, 94,0.5);
+  color: #000;
+}
+
+.scrollable-list {
+  height: 60%; /* Adjust height as needed */
+  overflow-y: auto;
 }
