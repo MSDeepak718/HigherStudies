@@ -1,8 +1,8 @@
-import image from './Assets/logo.png';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Dropdown from './components/dropdown';
 import './App.css';
+import image from './Assets/logo.png';
 
 function App() {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -22,6 +22,9 @@ function App() {
     countries: [],
     scores: [],
   });
+
+  const [sortConfigs, setSortConfigs] = useState([]);
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
@@ -83,7 +86,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const filtered = data.filter((item) => {
+    let filtered = data.filter((item) => {
       const scoreMatch = selectedScores.length === 0 || selectedScores.every(score => item.scores?.[score]);
       return (
         (!selectedYear || item.year === selectedYear) &&
@@ -94,6 +97,24 @@ function App() {
         scoreMatch
       );
     });
+
+    if (sortConfigs.length > 0) {
+      filtered = filtered.sort((a, b) => {
+        for (const config of sortConfigs) {
+          const aScore = a.scores?.[config.key] || 0;
+          const bScore = b.scores?.[config.key] || 0;
+
+          if (aScore < bScore) {
+            return config.direction === 'ascending' ? -1 : 1;
+          }
+          if (aScore > bScore) {
+            return config.direction === 'ascending' ? 1 : -1;
+          }
+        }
+        return 0;
+      });
+    }
+
     setFilteredData(filtered);
   }, [
     selectedYear,
@@ -102,6 +123,7 @@ function App() {
     selectedGender,
     selectedCountry,
     selectedScores,
+    sortConfigs,
     data,
   ]);
 
@@ -158,6 +180,42 @@ function App() {
     return getDropdownTitle(type) !== type ? 'highlighted-dropdown' : '';
   };
 
+  const requestSort = (key) => {
+    let newSortConfigs = [...sortConfigs];
+    const existingConfigIndex = newSortConfigs.findIndex(config => config.key === key);
+    
+    if (existingConfigIndex >= 0) {
+      // Toggle direction or remove from sort order
+      if (newSortConfigs[existingConfigIndex].direction === 'ascending') {
+        newSortConfigs[existingConfigIndex].direction = 'descending';
+      } else {
+        newSortConfigs.splice(existingConfigIndex, 1);
+      }
+    } else {
+      // Add as new sort key
+      newSortConfigs.push({ key, direction: 'ascending' });
+    }
+    
+    setSortConfigs(newSortConfigs);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setOpenDropdown(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const getDropdownStyle = (type) => {
+    return getDropdownTitle(type) !== type ? { backgroundColor: '#fff35e' } : {};
+  };
+
   return (
     <>
       <div className='header'>
@@ -166,7 +224,7 @@ function App() {
       <div className='title'>
         <h2>Higher Studies Students Data</h2>
       </div>
-      <div className='filter'>
+      <div className='filter' ref={dropdownRef}>
         <div className='filterify'>
           <h4>Filter list by: </h4>
           <div className='params'>
@@ -178,15 +236,17 @@ function App() {
               onSelect={(selected) => handleSelect('Year', selected)}
               resetDropdown={() => resetDropdown('Year')}
               dropdownClass={getDropdownClass('Year')}
+              style={getDropdownStyle('Year')}
             />
             <Dropdown
               buttonField={getDropdownTitle('Department')}
               items={dropdownData.departments}
-              isOpen={openDropdown === 'Department'}
+              isOpen={openDropdown === ('Department')}
               toggleDropdown={() => toggleDropdown('Department')}
               onSelect={(selected) => handleSelect('Department', selected)}
               resetDropdown={() => resetDropdown('Department')}
               dropdownClass={getDropdownClass('Department')}
+              style={getDropdownStyle('Department')}
             />
             <Dropdown
               buttonField={getDropdownTitle('Section')}
@@ -196,6 +256,7 @@ function App() {
               onSelect={(selected) => handleSelect('Section', selected)}
               resetDropdown={() => resetDropdown('Section')}
               dropdownClass={getDropdownClass('Section')}
+              style={getDropdownStyle('Section')}
             />
             <Dropdown
               buttonField={getDropdownTitle('Gender')}
@@ -205,24 +266,27 @@ function App() {
               onSelect={(selected) => handleSelect('Gender', selected)}
               resetDropdown={() => resetDropdown('Gender')}
               dropdownClass={getDropdownClass('Gender')}
+              style={getDropdownStyle('Gender')}
             />
             <Dropdown
               buttonField={getDropdownTitle('Preferred Country')}
               items={dropdownData.countries}
-              isOpen={openDropdown === 'Preferred Country'}
+              isOpen={openDropdown === ('Preferred Country')}
               toggleDropdown={() => toggleDropdown('Preferred Country')}
               onSelect={(selected) => handleSelect('Preferred Country', selected)}
               resetDropdown={() => resetDropdown('Preferred Country')}
               dropdownClass={getDropdownClass('Preferred Country')}
+              style={getDropdownStyle('Preferred Country')}
             />
             <Dropdown
               buttonField={getDropdownTitle('Scores')}
               items={dropdownData.scores}
-              isOpen={openDropdown === 'Scores'}
+              isOpen={openDropdown === ('Scores')}
               toggleDropdown={() => toggleDropdown('Scores')}
               onSelect={(selected) => handleSelect('Scores', selected)}
               resetDropdown={() => resetDropdown('Scores')}
               dropdownClass={getDropdownClass('Scores')}
+              style={getDropdownStyle('Scores')}
             />
           </div>
         </div>
@@ -241,7 +305,9 @@ function App() {
           <span>Preferred Course</span>
           <span>Preferred Country</span>
           {selectedScores.map(score => (
-            <span key={score}>{score}</span>
+            <span key={score} onClick={() => requestSort(score)} className="sortable-header">
+              {score} {sortConfigs.some(config => config.key === score) ? (sortConfigs.find(config => config.key === score).direction === 'ascending' ? '▲' : '▼') : ''}
+            </span>
           ))}
         </div>
         <div className='scrollable-list'>
@@ -263,8 +329,12 @@ function App() {
         </div>
       </div>
       <div className='footer'>
-        <p>This is a footer</p>
-      </div>
+        <h4>Broadcast Message</h4>
+        <p>Send a broadcast message to all filtered students instantly.</p>
+        <div className='button-container'>
+            <button className='glow-button'>Send Broadcast Message</button>
+        </div>
+      </div>
     </>
   );
 }

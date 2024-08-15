@@ -147,8 +147,59 @@
   overflow-y: auto;
 }
 
-.footer{
-  height: 30vh;
-  width: 100%;
-  background-color: #5e5e6d;
+.footer {
+  background-color: #000066; /* Dark blue background */
+  color: white; /* White text color */
+  padding: 20px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.footer h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.footer .button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer .glow-button {
+  background-color: #FFD700; /* Gold color */
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+.footer .glow-button::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  background: linear-gradient(45deg, #ff0, #f0f, #f00, #0ff);
+  border-radius: 12px;
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.footer .glow-button:hover::before {
+  opacity: 1;
 }

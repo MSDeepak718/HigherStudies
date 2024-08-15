@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://bhuvaneshg:deepakbhuvi@cluster0.e2m47pj.mongodb.net/HigherStudies?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb://localhost:27017/higherstudies', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
@@ -25,3 +25,4 @@ app.use('/api/data', dataRoutes);
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+
