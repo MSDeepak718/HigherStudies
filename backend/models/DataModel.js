@@ -30,7 +30,11 @@ const DataSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+<<<<<<< HEAD
 }, { collection: 'homepage' }); 
+=======
+}, { collection: 'StudentData' });
+>>>>>>> c16013e9fbaaf6af9a78cf271e2205acbe0ad661
 
 const DataModel = mongoose.model('Data', DataSchema);
 
