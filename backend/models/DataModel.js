@@ -30,7 +30,7 @@ const DataSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-}, { collection: 'StudentData' }); // Specify the collection name here
+}, { collection: 'StudentData' });
 
 const DataModel = mongoose.model('Data', DataSchema);
 
