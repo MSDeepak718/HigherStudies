@@ -59,21 +59,44 @@
   justify-content: flex-start;
 }
 
-.chatbot-button{
-  padding:20px 40px;
-  width: 300px;
-  border:0px;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #b721ff 100%);
-  color:white;
-  cursor: pointer;
-  border-radius:90px;
-  box-shadow: 5px;
-  font-size: medium;
-  font-weight: 500;
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 }
 
-.chatbot-button:hover{
-  background: linear-gradient(135deg, #b721ff 0%, #6a11cb 50%, #2575fc 100%);
+.glow-button {
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.glow-button::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  z-index: -1;
+  filter: blur(7px);
+  opacity: 0.65;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+.glow-button:hover::before {
+  opacity: 1;
+  background: linear-gradient(45deg, #00f, #0ff, #f0f, rgb(200, 0, 255));
 }
 
 
@@ -110,7 +133,7 @@
 
 .list-item {
   border-bottom: 1px solid #d8d8d8;
-  padding: 25px 0px;
+  padding: 15px 0px;
   cursor: pointer;
 }
 
@@ -120,6 +143,12 @@
 }
 
 .scrollable-list {
-  height: 60%; /* Adjust height as needed */
+  max-height: 500px; 
   overflow-y: auto;
+}
+
+.footer{
+  height: 30vh;
+  width: 100%;
+  background-color: #5e5e6d;
 }
