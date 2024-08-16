@@ -1,180 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* Reset some default styles */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
 
-/* Header styles */
-.header {
-  background-color: #000066;
-  padding: 15px;
-  text-align: center;
-}
-
-.header img {
-  max-width: 250px;
-}
-
-/* Profile container styles */
+/* Basic container styling */
 .profile-container {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 100px;
+  background-color: #f9f9f9; /* Optional: to visualize the container */
+  margin: 0 auto; /* Center the container if it has a fixed width */
+  max-width: 1200px; /* Optional: constrain the width */
 }
 
+/* Additional styling for profile elements */
 .profile-header {
-  background-color: #FFF35E; /* Yellow background */
-  color: #000;
-  padding: 10px;
-  border-radius: 10px 10px 0 0;
-}
-
-.profile-header-content {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.profile-photo img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.profile-details {
-  margin-top: 20px;
-}
-
-.detail-row {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.detail-label {
-  font-weight: 600;
-  color: #000066; /* Navy blue color */
-  padding-right: 20px;
-}
-
-.detail-value {
-  color: #333;
-}
-
-/* Expandable details styles */
-.expandable-details {
-  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-}
-
-.expandable-details.expanded {
-  max-height: 2000px; /* Adjust this value based on the content */
-  opacity: 1;
-}
-
-/* Profile buttons styles */
-.profile-buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  gap: 10px;
-}
-
-.expand-button, .edit-button, .delete-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.expand-button {
-  background-color: #002147; /* Navy blue color */
-  color: white;
-}
-
-.expand-button:hover {
-  background-color: #ffcc00; /* Yellow color */
-}
-
-.edit-button {
-  background-color: #002147; /* Navy blue color */
-  color: white;
-}
-
-.edit-button:hover {
-  background-color: #ffcc00; /* Yellow color */
-}
-
-.delete-button {
-  background-color: #e53935; /* Red color */
-  color: white;
-}
-
-.delete-button:hover {
-  background-color: #c62828; /* Darker red color */
-}
-
-/* Edit container styles */
-.edit-container {
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.edit-header {
-  background-color: #FFF35E; /* Yellow background */
-  padding: 10px;
-  border-radius: 8px;
   text-align: center;
   margin-bottom: 20px;
 }
 
-.edit-header h2 {
-  margin: 0;
-  color: #002147; /* Navy blue color for the header text */
+.profile-details {
+  background-color: #fff; /* Optional: background for profile details */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  padding: 20px;
 }
 
-.form-row {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
+.detail-row {
+  display: grid;
+  padding: 10px;
+  justify-content: space-between;
+  grid-template-columns: 3fr 2fr;
+  margin-bottom: 10px;
 }
 
-.form-row label {
-  margin-bottom: 5px;
+.detail-label {
   font-weight: bold;
+  text-transform: capitalize;
 }
 
-.form-row input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.detail-data {
+  color: #333;
 }
 
-.edit-container button {
-  padding: 10px 20px;
-  background-color: #002147;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.scores {
   margin-top: 20px;
 }
+.score-heading{
+  padding: 5px;
+  color: black;
+}
+.return-button {
+  display: block;
+  margin: 20px auto; /* Center button horizontally */
+  padding: 10px 20px;
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
 
-.edit-container button:hover {
-  background-color: #ffcc00;
+.return-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
 }

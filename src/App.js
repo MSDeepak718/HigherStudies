@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import Dropdown from './components/dropdown';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import Dropdown from './components/dropdown.js';
+import ProfilePage from './StudentProfile.js';
 import './App.css';
 import image from './Assets/logo.png';
 
@@ -22,38 +24,9 @@ function App() {
     countries: [],
     scores: [],
   });
-
   const [sortConfigs, setSortConfigs] = useState([]);
   const dropdownRef = useRef(null);
-
-  const toggleDropdown = (dropdown) => {
-    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
-  };
-
-  const resetDropdown = (type) => {
-    switch (type) {
-      case 'Year':
-        setSelectedYear('');
-        break;
-      case 'Department':
-        setSelectedDepartment('');
-        break;
-      case 'Section':
-        setSelectedSection('');
-        break;
-      case 'Gender':
-        setSelectedGender('');
-        break;
-      case 'Preferred Country':
-        setSelectedCountry('');
-        break;
-      case 'Scores':
-        setSelectedScores([]);
-        break;
-      default:
-        break;
-    }
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -63,12 +36,12 @@ function App() {
         setData(fetchedData);
         setFilteredData(fetchedData);
 
-        const uniqueYears = [...new Set(fetchedData.map(item => item.year))];
-        const uniqueDepartments = [...new Set(fetchedData.map(item => item.department))];
-        const uniqueSections = [...new Set(fetchedData.map(item => item.section))];
-        const uniqueGenders = [...new Set(fetchedData.map(item => item.gender))];
-        const uniqueCountries = [...new Set(fetchedData.map(item => item.preferredcountry))];
-        const allScores = fetchedData.flatMap(item => Object.keys(item.scores || {}));
+        const uniqueYears = [...new Set(fetchedData.map((item) => item.year))];
+        const uniqueDepartments = [...new Set(fetchedData.map((item) => item.department))];
+        const uniqueSections = [...new Set(fetchedData.map((item) => item.section))];
+        const uniqueGenders = [...new Set(fetchedData.map((item) => item.gender))];
+        const uniqueCountries = [...new Set(fetchedData.map((item) => item.preferredcountry))];
+        const allScores = fetchedData.flatMap((item) => Object.keys(item.scores || {}));
         const uniqueScores = [...new Set(allScores)];
 
         setDropdownData({
@@ -87,7 +60,7 @@ function App() {
 
   useEffect(() => {
     let filtered = data.filter((item) => {
-      const scoreMatch = selectedScores.length === 0 || selectedScores.every(score => item.scores?.[score]);
+      const scoreMatch = selectedScores.length === 0 || selectedScores.every((score) => item.scores?.[score]);
       return (
         (!selectedYear || item.year === selectedYear) &&
         (!selectedDepartment || item.department === selectedDepartment) &&
@@ -146,7 +119,7 @@ function App() {
         break;
       case 'Scores':
         if (selectedScores.includes(selected)) {
-          setSelectedScores(selectedScores.filter(score => score !== selected));
+          setSelectedScores(selectedScores.filter((score) => score !== selected));
         } else {
           setSelectedScores([...selectedScores, selected]);
         }
@@ -182,20 +155,18 @@ function App() {
 
   const requestSort = (key) => {
     let newSortConfigs = [...sortConfigs];
-    const existingConfigIndex = newSortConfigs.findIndex(config => config.key === key);
-    
+    const existingConfigIndex = newSortConfigs.findIndex((config) => config.key === key);
+
     if (existingConfigIndex >= 0) {
-      // Toggle direction or remove from sort order
       if (newSortConfigs[existingConfigIndex].direction === 'ascending') {
         newSortConfigs[existingConfigIndex].direction = 'descending';
       } else {
         newSortConfigs.splice(existingConfigIndex, 1);
       }
     } else {
-      // Add as new sort key
       newSortConfigs.push({ key, direction: 'ascending' });
     }
-    
+
     setSortConfigs(newSortConfigs);
   };
 
@@ -216,126 +187,191 @@ function App() {
     return getDropdownTitle(type) !== type ? { backgroundColor: '#fff35e' } : {};
   };
 
+  const toggleDropdown = (type) => {
+    if (openDropdown === type) {
+      setOpenDropdown(null);
+    } else {
+      setOpenDropdown(type);
+    }
+  };
+
+  const resetDropdown = (type) => {
+    switch (type) {
+      case 'Year':
+        setSelectedYear('');
+        break;
+      case 'Department':
+        setSelectedDepartment('');
+        break;
+      case 'Section':
+        setSelectedSection('');
+        break;
+      case 'Gender':
+        setSelectedGender('');
+        break;
+      case 'Preferred Country':
+        setSelectedCountry('');
+        break;
+      case 'Scores':
+        setSelectedScores([]);
+        break;
+      default:
+        break;
+    }
+    setOpenDropdown(null);
+  };
+
+  const handleRowClick = (student) => {
+    navigate('/profile', { state: { student } });
+  };
+
   return (
-    <>
-      <div className='header'>
-        <img src={image} alt='logo' />
-      </div>
-      <div className='title'>
-        <h2>Higher Studies Students Data</h2>
-      </div>
-      <div className='filter' ref={dropdownRef}>
-        <div className='filterify'>
-          <h4>Filter list by: </h4>
-          <div className='params'>
-            <Dropdown
-              buttonField={getDropdownTitle('Year')}
-              items={dropdownData.years}
-              isOpen={openDropdown === 'Year'}
-              toggleDropdown={() => toggleDropdown('Year')}
-              onSelect={(selected) => handleSelect('Year', selected)}
-              resetDropdown={() => resetDropdown('Year')}
-              dropdownClass={getDropdownClass('Year')}
-              style={getDropdownStyle('Year')}
-            />
-            <Dropdown
-              buttonField={getDropdownTitle('Department')}
-              items={dropdownData.departments}
-              isOpen={openDropdown === ('Department')}
-              toggleDropdown={() => toggleDropdown('Department')}
-              onSelect={(selected) => handleSelect('Department', selected)}
-              resetDropdown={() => resetDropdown('Department')}
-              dropdownClass={getDropdownClass('Department')}
-              style={getDropdownStyle('Department')}
-            />
-            <Dropdown
-              buttonField={getDropdownTitle('Section')}
-              items={dropdownData.sections}
-              isOpen={openDropdown === 'Section'}
-              toggleDropdown={() => toggleDropdown('Section')}
-              onSelect={(selected) => handleSelect('Section', selected)}
-              resetDropdown={() => resetDropdown('Section')}
-              dropdownClass={getDropdownClass('Section')}
-              style={getDropdownStyle('Section')}
-            />
-            <Dropdown
-              buttonField={getDropdownTitle('Gender')}
-              items={dropdownData.genders}
-              isOpen={openDropdown === 'Gender'}
-              toggleDropdown={() => toggleDropdown('Gender')}
-              onSelect={(selected) => handleSelect('Gender', selected)}
-              resetDropdown={() => resetDropdown('Gender')}
-              dropdownClass={getDropdownClass('Gender')}
-              style={getDropdownStyle('Gender')}
-            />
-            <Dropdown
-              buttonField={getDropdownTitle('Preferred Country')}
-              items={dropdownData.countries}
-              isOpen={openDropdown === ('Preferred Country')}
-              toggleDropdown={() => toggleDropdown('Preferred Country')}
-              onSelect={(selected) => handleSelect('Preferred Country', selected)}
-              resetDropdown={() => resetDropdown('Preferred Country')}
-              dropdownClass={getDropdownClass('Preferred Country')}
-              style={getDropdownStyle('Preferred Country')}
-            />
-            <Dropdown
-              buttonField={getDropdownTitle('Scores')}
-              items={dropdownData.scores}
-              isOpen={openDropdown === ('Scores')}
-              toggleDropdown={() => toggleDropdown('Scores')}
-              onSelect={(selected) => handleSelect('Scores', selected)}
-              resetDropdown={() => resetDropdown('Scores')}
-              dropdownClass={getDropdownClass('Scores')}
-              style={getDropdownStyle('Scores')}
-            />
-          </div>
-        </div>
-        <div className='button-container'>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <div className="header">
+              <img src={image} alt="logo" />
+            </div>
+            <div className="title">
+              <h2>Higher Studies Students Data</h2>
+            </div>
+            <div className="filter" ref={dropdownRef}>
+              <div className="filterify">
+                <h4>Filter list by: </h4>
+                <div className="params">
+                  <Dropdown
+                    buttonField={getDropdownTitle('Year')}
+                    items={dropdownData.years}
+                    isOpen={openDropdown === 'Year'}
+                    toggleDropdown={() => toggleDropdown('Year')}
+                    onSelect={(selected) => handleSelect('Year', selected)}
+                    resetDropdown={() => resetDropdown('Year')}
+                    dropdownClass={getDropdownClass('Year')}
+                    style={getDropdownStyle('Year')}
+                  />
+                  <Dropdown
+                    buttonField={getDropdownTitle('Department')}
+                    items={dropdownData.departments}
+                    isOpen={openDropdown === 'Department'}
+                    toggleDropdown={() => toggleDropdown('Department')}
+                    onSelect={(selected) => handleSelect('Department', selected)}
+                    resetDropdown={() => resetDropdown('Department')}
+                    dropdownClass={getDropdownClass('Department')}
+                    style={getDropdownStyle('Department')}
+                  />
+                  <Dropdown
+                    buttonField={getDropdownTitle('Section')}
+                    items={dropdownData.sections}
+                    isOpen={openDropdown === 'Section'}
+                    toggleDropdown={() => toggleDropdown('Section')}
+                    onSelect={(selected) => handleSelect('Section', selected)}
+                    resetDropdown={() => resetDropdown('Section')}
+                    dropdownClass={getDropdownClass('Section')}
+                    style={getDropdownStyle('Section')}
+                  />
+                  <Dropdown
+                    buttonField={getDropdownTitle('Gender')}
+                    items={dropdownData.genders}
+                    isOpen={openDropdown === 'Gender'}
+                    toggleDropdown={() => toggleDropdown('Gender')}
+                    onSelect={(selected) => handleSelect('Gender', selected)}
+                    resetDropdown={() => resetDropdown('Gender')}
+                    dropdownClass={getDropdownClass('Gender')}
+                    style={getDropdownStyle('Gender')}
+                  />
+                  <Dropdown
+                    buttonField={getDropdownTitle('Preferred Country')}
+                    items={dropdownData.countries}
+                    isOpen={openDropdown === 'Preferred Country'}
+                    toggleDropdown={() => toggleDropdown('Preferred Country')}
+                    onSelect={(selected) => handleSelect('Preferred Country', selected)}
+                    resetDropdown={() => resetDropdown('Preferred Country')}
+                    dropdownClass={getDropdownClass('Preferred Country')}
+                    style={getDropdownStyle('Preferred Country')}
+                  />
+                  <Dropdown
+                    buttonField={getDropdownTitle('Scores')}
+                    items={dropdownData.scores}
+                    isOpen={openDropdown === 'Scores'}
+                    toggleDropdown={() => toggleDropdown('Scores')}
+                    onSelect={(selected) => handleSelect('Scores', selected)}
+                    resetDropdown={() => resetDropdown('Scores')}
+                    dropdownClass={getDropdownClass('Scores')}
+                    style={getDropdownStyle('Scores')}
+                  />
+                </div>
+              </div>
+              <div className='button-container'>
           <button className='glow-button'>Chat with Kutty AI</button>
         </div>
-      </div>
-      <div className='table-container'>
-        <div className='table-header'>
-          <span>S.No</span>
-          <span>Student Name</span>
-          <span>Student Id</span>
-          <span>Department</span>
-          <span>Section</span>
-          <span>Preferred Degree</span>
-          <span>Preferred Course</span>
-          <span>Preferred Country</span>
-          {selectedScores.map(score => (
-            <span key={score} onClick={() => requestSort(score)} className="sortable-header">
-              {score} {sortConfigs.some(config => config.key === score) ? (sortConfigs.find(config => config.key === score).direction === 'ascending' ? '▲' : '▼') : ''}
-            </span>
-          ))}
-        </div>
-        <div className='scrollable-list'>
-          {filteredData.map((item, index) => (
-            <div className='list-item' key={item._id}>
-              <span>{index + 1}</span>
-              <span>{item.studentname}</span>
-              <span>{item.studentid}</span>
-              <span>{item.department}</span>
-              <span>{item.section}</span>
-              <span>{item.preferreddegree}</span>
-              <span>{item.preferredcourse}</span>
-              <span>{item.preferredcountry}</span>
-              {selectedScores.map(score => (
-                <span key={score}>{item.scores?.[score] || 'N/A'}</span>
-              ))}
             </div>
-          ))}
-        </div>
-      </div>
-      <div className='footer'>
+            
+            <div className="table-container">
+              <div className="table-header">
+                <span className="header-item" onClick={() => requestSort('studentname')}>
+                  Name
+                </span>
+                <span className="header-item" onClick={() => requestSort('studentid')}>
+                  ID
+                </span>
+                <span className="header-item" onClick={() => requestSort('department')}>
+                  Department
+                </span>
+                <span className="header-item" onClick={() => requestSort('section')}>
+                  Section
+                </span>
+                <span className="header-item" onClick={() => requestSort('preferreddegree')}>
+                  Preferred Degree
+                </span>
+                <span className="header-item" onClick={() => requestSort('preferredcourse')}>
+                  Preferred Course
+                </span>
+                <span className="header-item" onClick={() => requestSort('preferredcountry')}>
+                  Preferred Country
+                </span>
+                {selectedScores.map((score) => (
+                  <span key={score} className="header-item" onClick={() => requestSort(score)}>
+                    {score}
+                  </span>
+                ))}
+              </div>
+              <div className="scrollable-list">
+                {filteredData.map((item, index) => (
+                  <div
+                    className="list-item"
+                    key={item._id}
+                    onClick={() => handleRowClick(item)}
+                  >
+                    <span>{index + 1}</span>
+                    <span>{item.studentname}</span>
+                    <span>{item.studentid}</span>
+                    <span>{item.department}</span>
+                    <span>{item.section}</span>
+                    <span>{item.preferreddegree}</span>
+                    <span>{item.preferredcourse}</span>
+                    <span>{item.preferredcountry}</span>
+                    {selectedScores.map((score) => (
+                      <span key={score}>{item.scores?.[score] || '-'}</span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+            </div>
+            <div className='footer'>
         <h4>Broadcast Message</h4>
         <p>Send a broadcast message to all filtered students instantly.</p>
         <div className='button-container'>
             <button className='glow-button'>Send Broadcast Message</button>
         </div>
       </div>
-    </>
+          </>
+        }
+      />
+      <Route path="/profile" element={<ProfilePage />} />
+    </Routes>
   );
 }
 
