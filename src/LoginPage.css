@@ -127,7 +127,11 @@
     padding: 10px 10px 10px 40px;
     font-size: 1rem;
     color: #000066; /* Dark blue */
+<<<<<<< HEAD
     background-image: url('D:\NewGenAi\HigherStudies\src\Assets\padlock.png');
+=======
+    background-image: url('./Assets/padlock.png');
+>>>>>>> f09c9161c6c692316b035da16f794157b4c404b4
     background-repeat: no-repeat;
     background-position: 8px center;
     background-size: 20px;
@@ -137,7 +141,11 @@
     padding: 10px 10px 10px 40px;
     font-size: 1rem;
     color: #000066; /* Dark blue */
+<<<<<<< HEAD
     background-image: url('D:\NewGenAi\HigherStudies\src\Assets\user (1).png');
+=======
+    background-image: url('./Assets/user (1).png');
+>>>>>>> f09c9161c6c692316b035da16f794157b4c404b4
     background-repeat: no-repeat;
     background-position: 8px center;
     background-size: 20px;
