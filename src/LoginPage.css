@@ -127,7 +127,7 @@
     padding: 10px 10px 10px 40px;
     font-size: 1rem;
     color: #000066; /* Dark blue */
-    background-image: url('E:\Git Repo\HigherStudies\src\Assets\padlock.png');
+    background-image: url('./Assets/padlock.png');
     background-repeat: no-repeat;
     background-position: 8px center;
     background-size: 20px;
@@ -137,7 +137,7 @@
     padding: 10px 10px 10px 40px;
     font-size: 1rem;
     color: #000066; /* Dark blue */
-    background-image: url('E:\Git Repo\HigherStudies\src\Assets\user (1).png');
+    background-image: url('./Assets/user (1).png');
     background-repeat: no-repeat;
     background-position: 8px center;
     background-size: 20px;
