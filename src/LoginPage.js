@@ -17,7 +17,7 @@ function LoginPage() {
     }, [navigate]);
 
     const handleLoginClick = () => {
-        if(username.indexOf("@")==-1){
+        if(username.indexOf("@")===-1){
             alert("Invalid Email")
         }else if(password<8){
             alert("Invalid Password")

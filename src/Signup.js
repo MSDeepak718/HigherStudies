@@ -19,9 +19,9 @@ function Signup() {
         event.preventDefault();
         if (password === confirmPassword && password.length>=8) {
             navigate('/app');
-        } else if(email.indexOf("@")==-1){
+        } else if(email.indexOf("@")===-1){
             alert("Not a valid Email")
-        }else if(password != confirmPassword){
+        }else if(password !== confirmPassword){
             alert("Passwords do not match to the confirm password!");
         }else{
             alert("Password Length is less than 8")
