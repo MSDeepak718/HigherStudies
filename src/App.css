@@ -5,7 +5,10 @@
   padding: 0;
   font-family: poppins,'sans-serif';
 }
-
+body{
+  background-image: none;
+  background-color: white;
+}
 .header{
   background-color: #000066;
 }
@@ -45,8 +48,6 @@
   padding-left: 30px;
 }
 
-
-
 .filter h4{
   color: #737373;
   font-size: 16px;
@@ -64,6 +65,10 @@
   justify-content: center;
   align-items: center;
   margin: 20px;
+}
+.button{
+  display: flex;
+  justify-content: space-between;
 }
 
 .glow-button {
@@ -121,16 +126,20 @@
 }
 
 .table-header {
+  display:table;
   background-color: #f0f0f0;
+  table-layout: fixed;
   border-bottom: 3px solid #D8D8D8;
 }
 
 .table-header span, .list-item span {
   display: table-cell;
-  padding: 15px;
+  padding: 10px;
   text-align: center;
+  vertical-align: middle;
+  width: 150px;
+  box-sizing: border-box;
 }
-
 .list-item {
   border-bottom: 1px solid #d8d8d8;
   padding: 15px 0px;

@@ -3,14 +3,15 @@
 
 /* Basic container styling */
 .profile-container {
-  padding: 100px;
-  background-color: #f9f9f9; /* Optional: to visualize the container */
-  margin: 0 auto; /* Center the container if it has a fixed width */
-  max-width: 1200px; /* Optional: constrain the width */
+  padding: 20px;
+  margin: 0 auto; 
+  max-width: 600px; 
 }
 
 /* Additional styling for profile elements */
 .profile-header {
+  background-color: #FFF35E;
+  border-radius: 12px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -18,7 +19,7 @@
 .profile-details {
   background-color: #fff; /* Optional: background for profile details */
   border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
   padding: 20px;
 }
 
@@ -26,12 +27,14 @@
   display: grid;
   padding: 10px;
   justify-content: space-between;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr 1fr;
   margin-bottom: 10px;
+  border-bottom: 1px solid grey;
 }
 
 .detail-label {
   font-weight: bold;
+  text-align: center;
   text-transform: capitalize;
 }
 
@@ -45,20 +48,56 @@
 .score-heading{
   padding: 5px;
   color: black;
+  text-align: center;
+  margin-bottom: 10px;
 }
 .return-button {
   display: block;
-  margin: 20px auto; /* Center button horizontally */
+  margin: 20px auto;
   padding: 10px 20px;
-  background-color: #007bff; /* Button background color */
-  color: white; /* Button text color */
+  background-color: #007bff; 
+  color: white; 
   border: none;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px; 
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
 }
 
 .return-button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3; 
+}
+
+.edit-button {
+  display: block;
+  margin: 20px auto; 
+  padding: 10px 20px;
+  background-color: #007bff; 
+  color: white; 
+  border: none;
+  border-radius: 5px; 
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #0056b3; 
+}
+
+.delete-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white; 
+  border: none;
+  border-radius: 5px; 
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #0056b3; 
 }

@@ -5,30 +5,6 @@ const DataSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
-    },
-    studentName: {
-        type: String,
-        required: true
-    },
-    department: {
-        type: String,
-        required: true
-    },
-    section: {
-        type: String,
-        required: true
-    },
-    preferredDegree: {
-        type: String,
-        required: true
-    },
-    preferredCourse: {
-        type: String,
-        required: true
-    },
-    preferredCountry: {
-        type: String,
-        required: true
     }
 }, { collection: 'StudentData' }); 
 

@@ -1,0 +1,97 @@
+.signup-page {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-image: url('./Assets/8068.jpg'); /* Ensure the path is correct */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    width: 100vw;
+  }
+.login-container{
+    background: white;
+    backdrop-filter: blur(2px);
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #000066; /* Dark blue */
+    margin-bottom: 20px;
+}
+
+.username-field, .password-field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.label h4 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: #000066; /* Dark blue */
+}
+
+.input-field {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    transition: border-color 0.3s;
+}
+
+.input-field input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 10px 10px 10px 40px;
+    font-size: 1rem;
+    color: #000066; /* Dark blue */
+    background-color: transparent;
+}
+
+.input-field input::placeholder {
+    color: #aaa;
+}
+
+.input-field:focus-within {
+    border-bottom-color: #FFF35E; 
+}
+
+.signup-button {
+    width: 100%;
+}
+
+.signup-button button {
+    background: linear-gradient(45deg, #FFF35E, #000066); /* Bright yellow to dark blue */
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    font-size: 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.4s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.signup-button button:hover {
+    background: linear-gradient(45deg, #000066, #FFF35E); /* Dark blue to bright yellow */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+}

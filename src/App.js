@@ -5,6 +5,8 @@ import Dropdown from './components/dropdown.js';
 import ProfilePage from './StudentProfile.js';
 import './App.css';
 import image from './Assets/logo.png';
+import Loginpage from './LoginPage.js';
+import Signup from './Signup.js';
 
 function App() {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -227,8 +229,10 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<Loginpage />} />
+      <Route path="/signup" element={<Signup />}/>
       <Route
-        path="/"
+        path="/app"
         element={
           <>
             <div className="header">
@@ -310,29 +314,32 @@ function App() {
             
             <div className="table-container">
               <div className="table-header">
-                <span className="header-item" onClick={() => requestSort('studentname')}>
+              <span onClick={() => requestSort('studentname')}>
+                  S.no
+                </span>
+                <span onClick={() => requestSort('studentname')}>
                   Name
                 </span>
-                <span className="header-item" onClick={() => requestSort('studentid')}>
+                <span onClick={() => requestSort('studentid')}>
                   ID
                 </span>
-                <span className="header-item" onClick={() => requestSort('department')}>
+                <span  onClick={() => requestSort('department')}>
                   Department
                 </span>
-                <span className="header-item" onClick={() => requestSort('section')}>
+                <span onClick={() => requestSort('section')}>
                   Section
                 </span>
-                <span className="header-item" onClick={() => requestSort('preferreddegree')}>
+                <span  onClick={() => requestSort('preferreddegree')}>
                   Preferred Degree
                 </span>
-                <span className="header-item" onClick={() => requestSort('preferredcourse')}>
+                <span onClick={() => requestSort('preferredcourse')}>
                   Preferred Course
                 </span>
-                <span className="header-item" onClick={() => requestSort('preferredcountry')}>
+                <span  onClick={() => requestSort('preferredcountry')}>
                   Preferred Country
                 </span>
                 {selectedScores.map((score) => (
-                  <span key={score} className="header-item" onClick={() => requestSort(score)}>
+                  <span key={score} className="sortable-header" onClick={() => requestSort(score)}>
                     {score}
                   </span>
                 ))}
@@ -366,7 +373,7 @@ function App() {
         <div className='button-container'>
             <button className='glow-button'>Send Broadcast Message</button>
         </div>
-      </div>
+      </div>
           </>
         }
       />
