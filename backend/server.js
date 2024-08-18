@@ -17,7 +17,8 @@ mongoose.connect('mongodb+srv://bhuvaneshg:deepakbhuvi@cluster0.e2m47pj.mongodb.
 .catch((err) => console.error(err));
 
 
-app.use('/api/data', dataRoutes);
+app.use('/api/data', dataRoutes); 
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

@@ -6,8 +6,8 @@ import facebook from './Assets/facebook.png';
 import whatsapp from './Assets/whatsapp.png';
 
 function LoginPage() {
-    const [username, setUsername] = useState(" ");
-    const [password, setPassword] = useState(" ");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
     // Reset form fields when the component mounts or navigates to this page
@@ -16,13 +16,30 @@ function LoginPage() {
         setPassword('');
     }, [navigate]);
 
-    const handleLoginClick = () => {
+    const handleLoginClick = async() => {
         if(username.indexOf("@")===-1){
             alert("Invalid Email")
+            return;
         }else if(password<8){
             alert("Invalid Password")
-        }else{
-            navigate('/app');
+            return;
+        }
+        try {
+            const response = await fetch('http://localhost:5001/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email:username, password }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                navigate('/app');
+            } else {
+                alert(data.error);
+            }
+        } catch (error) {
+            alert("Error logging in");
         }
     };
 

@@ -8,23 +8,46 @@ function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
 
-    // Reset form fields when component mounts
     useEffect(() => {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
     }, []);
 
-    const handleSignup = (event) => {
+    const handleSignup = async (event) => {
         event.preventDefault();
-        if (password === confirmPassword && password.length>=8) {
-            navigate('/app');
-        } else if(email.indexOf("@")===-1){
-            alert("Not a valid Email")
-        }else if(password !== confirmPassword){
-            alert("Passwords do not match to the confirm password!");
-        }else{
-            alert("Password Length is less than 8")
+
+        if (email.indexOf("@") === -1) {
+            alert("Not a valid Email");
+            return;
+        } else if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        } else if (password.length < 8) {
+            alert("Password must be at least 8 characters long");
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:5001/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            if (response.ok) {
+                navigate('/app');
+            } else {
+                alert(data.error);
+            }
+        } catch (error) {
+            console.error('Signup Error', error);
+            alert("Error signing up. Please try again.");
         }
     };
 
@@ -63,6 +86,7 @@ function Signup() {
                                 className="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                required
                             />
                         </div>
                     </div>
@@ -78,6 +102,7 @@ function Signup() {
                                 className="password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
                             />
                         </div>
                     </div>
