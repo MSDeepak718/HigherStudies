@@ -25,7 +25,7 @@ function LoginPage() {
             return;
         }
         try {
-            const response = await fetch('http://localhost:5001/login', {
+            const response = await fetch('http://localhost:5000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,7 +34,9 @@ function LoginPage() {
             });
             const data = await response.json();
             if (response.ok) {
+                localStorage.setItem('token', data.token);
                 navigate('/app');
+                alert("Logged in Successfully");
             } else {
                 alert(data.error);
             }

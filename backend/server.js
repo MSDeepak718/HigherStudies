@@ -5,9 +5,17 @@ const dataRoutes = require('./routes/data');
 
 const app = express();
 const port = process.env.PORT || 5002;
+const authMiddleware = require('./authtoken');
+
+
 
 app.use(cors());
 app.use(express.json());
+
+
+app.get('/app', authMiddleware, (req, res) => {
+    res.send('Welcome to the main page');
+});
 
 mongoose.connect('mongodb+srv://bhuvaneshg:deepakbhuvi@cluster0.e2m47pj.mongodb.net/HigherStudies?retryWrites=true&w=majority&appName=Cluster0', {
     connectTimeoutMS:30000,

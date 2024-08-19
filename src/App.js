@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Dropdown from './components/dropdown.js';
+import { Navigate } from 'react-router-dom';
 import ProfilePage from './StudentProfile.js';
 import './App.css';
 import image from './Assets/logo.png';
@@ -9,6 +10,7 @@ import Loginpage from './LoginPage.js';
 import Signup from './Signup.js';
 
 function App() {
+  const [searchQuery, setSearchQuery] = useState('')
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
@@ -63,13 +65,22 @@ function App() {
   useEffect(() => {
     let filtered = data.filter((item) => {
       const scoreMatch = selectedScores.length === 0 || selectedScores.every((score) => item.scores?.[score]);
+      const searchMatch =
+      item.studentname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.studentid.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.department.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.section.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.preferreddegree.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.preferredcourse.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.preferredcountry.toLowerCase().includes(searchQuery.toLowerCase());
+
       return (
         (!selectedYear || item.year === selectedYear) &&
         (!selectedDepartment || item.department === selectedDepartment) &&
         (!selectedSection || item.section === selectedSection) &&
         (!selectedGender || item.gender === selectedGender) &&
         (!selectedCountry || item.preferredcountry === selectedCountry) &&
-        scoreMatch
+        scoreMatch && searchMatch
       );
     });
 
@@ -99,7 +110,7 @@ function App() {
     selectedCountry,
     selectedScores,
     sortConfigs,
-    data,
+    data, searchQuery
   ]);
 
   const handleSelect = (type, selected) => {
@@ -232,6 +243,7 @@ function App() {
       <Route path="/" element={<Loginpage />} />
       <Route path="/signup" element={<Signup />}/>
       <Route
+
         path="/app"
         element={
           <>
@@ -310,8 +322,16 @@ function App() {
               <div className='button-container'>
           <button className='glow-button'>Chat with Kutty AI</button>
         </div>
+        
             </div>
-            
+            <div className="search-bar">
+              <input
+                type="text"
+                placeholder="Search name, id, Department..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
             <div className="table-container">
               <div className="table-header">
               <span onClick={() => requestSort('studentname')}>
@@ -351,9 +371,9 @@ function App() {
                     key={item._id}
                     onClick={() => handleRowClick(item)}
                   >
-                    <span>{index + 1}</span>
-                    <span>{item.studentname}</span>
-                    <span>{item.studentid}</span>
+                    <span className='student-name'>{index + 1}</span>
+                    <span className='student-name'>{item.studentname}</span>
+                    <span className='student-name'>{item.studentid}</span>
                     <span>{item.department}</span>
                     <span>{item.section}</span>
                     <span>{item.preferreddegree}</span>
@@ -378,6 +398,7 @@ function App() {
         }
       />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }

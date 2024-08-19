@@ -29,7 +29,7 @@ function Signup() {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/signup', {
+            const response = await fetch('http://localhost:5000/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +41,9 @@ function Signup() {
             console.log(data);
 
             if (response.ok) {
+                localStorage.setItem('token', data.token); 
                 navigate('/app');
+                alert("Signed Up Successfully")
             } else {
                 alert(data.error);
             }

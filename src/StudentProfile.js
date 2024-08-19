@@ -19,7 +19,7 @@ function ProfilePage() {
     const confirmDelete = window.confirm("Are you sure you want to delete this student?");
     if (confirmDelete) {
       try {
-        await fetch(`http://localhost:5000/api/data/${student._id}`, {
+        await fetch(`http://localhost:5002/api/data/${student._id}`, {
           method: 'DELETE',
         });
         alert('Student deleted successfully.');
@@ -46,7 +46,7 @@ function ProfilePage() {
   const handleSave = async () => {
     console.log('Saving data:', editableStudent); // Debugging line
     try {
-      const response = await fetch(`http://localhost:5000/api/data/${student._id}`, {
+      const response = await fetch(`http://localhost:5002/api/data/${student._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

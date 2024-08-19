@@ -4,7 +4,7 @@ const Register = require('./models/Register');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const app = express();
-const port = 5001;
+const port = 5000;
 
 app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001'],
