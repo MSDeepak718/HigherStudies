@@ -37,10 +37,21 @@ function ProfilePage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditableStudent((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name.startsWith('scores.')) {
+      const [_, subject] = name.split('.');
+      setEditableStudent((prev) => ({
+        ...prev,
+        scores: {
+          ...prev.scores,
+          [subject]: value,
+        },
+      }));
+    } else {
+      setEditableStudent((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSave = async () => {
@@ -124,12 +135,7 @@ function ProfilePage() {
                       type="text"
                       name={`scores.${subject}`}
                       value={score}
-                      onChange={(e) => handleChange({
-                        target: {
-                          name: `scores.${subject}`,
-                          value: e.target.value,
-                        },
-                      })}
+                      onChange={handleChange}
                     />
                   ) : (
                     score

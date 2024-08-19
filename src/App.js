@@ -319,10 +319,10 @@ function App() {
                   />
                 </div>
               </div>
-              <div className='button-container'>
-          <button className='glow-button'>Chat with Kutty AI</button>
-        </div>
-        
+            </div>
+            <div className='filter2'>
+            <div className='button-container'>
+              <button className='glow-button'>Chat with Kutty AI</button>
             </div>
             <div className="search-bar">
               <input
@@ -332,6 +332,7 @@ function App() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
+            </div>
             <div className="table-container">
               <div className="table-header">
               <span onClick={() => requestSort('studentname')}>
@@ -391,7 +392,7 @@ function App() {
         <h4>Broadcast Message</h4>
         <p>Send a broadcast message to all filtered students instantly.</p>
         <div className='button-container'>
-            <button className='glow-button'>Send Broadcast Message</button>
+            <button className='glow'>Send Broadcast Message</button>
         </div>
       </div>
           </>
