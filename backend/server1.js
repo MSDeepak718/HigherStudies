@@ -16,8 +16,8 @@ app.use(cors({
 app.use(express.json());
 
 mongoose.connect('mongodb+srv://bhuvaneshg:deepakbhuvi@cluster0.e2m47pj.mongodb.net/HigherStudies?retryWrites=true&w=majority&appName=Cluster0', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+    connectTimeoutMS:50000,
+    socketTimeoutMS:50000,
 })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log('MongoDB connection error:', err));

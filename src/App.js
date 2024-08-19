@@ -32,7 +32,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/data')
+      .get('http://localhost:5002/api/data')
       .then((response) => {
         const fetchedData = response.data;
         setData(fetchedData);

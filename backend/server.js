@@ -4,14 +4,14 @@ const cors = require('cors');
 const dataRoutes = require('./routes/data');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5002;
 
 app.use(cors());
 app.use(express.json());
 
 mongoose.connect('mongodb+srv://bhuvaneshg:deepakbhuvi@cluster0.e2m47pj.mongodb.net/HigherStudies?retryWrites=true&w=majority&appName=Cluster0', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    connectTimeoutMS:30000,
+    socketTimeoutMS:45000,
 })
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.error(err));
