@@ -8,6 +8,7 @@ import './App.css';
 import image from './Assets/logo.png';
 import Loginpage from './LoginPage.js';
 import Signup from './Signup.js';
+import InsertPage from './InsertPage.js';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -199,7 +200,9 @@ function App() {
   const getDropdownStyle = (type) => {
     return getDropdownTitle(type) !== type ? { backgroundColor: '#fff35e' } : {};
   };
-
+  const handleAddStudent=()=>{
+    navigate('/insertpage')
+  }
   const toggleDropdown = (type) => {
     if (openDropdown === type) {
       setOpenDropdown(null);
@@ -322,17 +325,22 @@ function App() {
               </div>
             </div>
             <div className='filter2'>
-            <div className='button-container'>
-              <button className='glow-button'>Chat with Kutty AI</button>
-            </div>
-            <div className="search-bar">
-              <input
-                type="text"
-                placeholder="Search name, id, Department..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
+              <div className='add-student'>
+                <button className='addstudent-button' onClick={handleAddStudent}>Add Student</button>
+              </div>
+              <div className='buttons'>
+                <div className='button-container'>
+                  <button className='glow-button'>Chat with Kutty AI</button>
+                </div>
+                <div className="search-bar">
+                  <input
+                    type="text"
+                    placeholder="Search name, id, Department..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
             <div className="table-container">
               <div className="table-header">
@@ -399,6 +407,7 @@ function App() {
           </>
         }
       />
+      <Route path="/insertpage" element={<InsertPage />}/>
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>

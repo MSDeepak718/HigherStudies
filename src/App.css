@@ -12,7 +12,27 @@ body {
 .header {
   background-color: #000066;
 }
+.filter2 .addstudent-button{
+  padding:10px 30px;
+  border-radius: 25px;
+  border:0px;
+  background: #1aff00;
+  color:black;
+  font-weight:500;
+  font-size: 16px;
+}
+.filter2 .addstudent-button:hover{
+padding:10px 30px;
+cursor: pointer;
+transform: translateY(-2px);
+transition: all 0.4s ease;
+border-radius: 25px;
+border:0px;
+font-weight: 500;
+background:  #14a804;
+color:white;
 
+}
 .header img {
   max-width: 300px;
   padding: 25px;
@@ -58,12 +78,14 @@ body {
   align-items: center;
   justify-content: flex-start;
 }
-
+.buttons{
+  display: flex;
+  justify-content: space-between;
+}
 .filter2{
   display: flex;
-  float: inline-end;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-evenly;
   margin: 20px;
 }
 

@@ -3,12 +3,26 @@ const DataModel = require('../models/DataModel');
 const { ObjectId } = require('mongoose').Types; // Import ObjectId
 const router = express.Router();
 
+// Get all students
 router.get('/', async (req, res) => {
     try {
         const data = await DataModel.find();
         res.json(data);
     } catch (err) {
         res.status(500).json({ message: err.message });
+    }
+});
+
+// Add a new student
+router.post('/', async (req, res) => {
+    console.log('Received post request with data:', req.body); // Debugging line
+    try {
+        const newStudent = new DataModel(req.body); // Create a new DataModel instance with the request body
+        const savedStudent = await newStudent.save(); // Save the new student to the database
+        console.log('New student added:', savedStudent); // Debugging line
+        res.status(201).json(savedStudent); // Respond with the created student and status code 201
+    } catch (err) {
+        res.status(400).json({ message: err.message }); // Respond with a 400 status code if there's an error
     }
 });
 
