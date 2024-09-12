@@ -1,22 +1,55 @@
 
-.profile-container {
-  padding: 20px;
-  margin: 0 auto; 
-  max-width: 600px; 
+.profile-details-container::-webkit-scrollbar,
+.recommendations-container::-webkit-scrollbar {
+  display: none;
 }
 
-.profile-header {
-  background-color: #FFF35E;
+
+.profile-details-container,
+.recommendations-container {
+  scrollbar-width: none;
+}
+
+
+.profile-details-container,
+.recommendations-container {
+  -ms-overflow-style: none; 
+}
+
+.profile-container {
+  display: flex;
+  justify-content: space-evenly; 
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  max-height: 100vh; 
+}
+
+.profile-details-container,
+.recommendations-container {
+  width: 48%; 
+  padding: 20px;
+  height: calc(100vh - 60px);
+  overflow-y: auto; 
+  background-color: #fff;
   border-radius: 12px;
-  text-align: center;
-  margin-bottom: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.recommendations-container {
+  background-color: #f8f9fa;
 }
 
 .profile-details {
-  background-color: #fff; 
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
+  height: 100%; 
+  overflow-y: auto;
+}
+
+.recommendations {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto; 
 }
 
 .detail-row {
@@ -41,79 +74,132 @@
 .scores {
   margin-top: 20px;
 }
-.score-heading{
+
+.score-heading {
   padding: 5px;
   color: black;
   text-align: center;
   margin-bottom: 10px;
 }
-.return-button {
+
+.recommendations h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.recommendations ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recommendations li {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.recommendations li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.recommendations h4 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #007bff;
+}
+
+.recommendations p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.recommendations .no-recommendations {
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+}
+
+/* Keep existing styles */
+.header img {
+  max-width: 100px;
+}
+
+.title h2 {
+  text-align: center;
+  color: #333;
+}
+
+.profile-header {
+  background-color: #FFF35E;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-details-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.return-button, .edit-button, .save-button, .delete-button {
   display: block;
-  margin: 20px auto;
+  margin: 10px auto;
   padding: 10px 20px;
-  background-color: #007bff; 
-  color: white; 
   border: none;
-  border-radius: 5px; 
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: bold;
   transition: background-color 0.3s ease;
+}
+
+.return-button {
+  background-color: #007bff;
+  color: white;
 }
 
 .return-button:hover {
-  background-color: #0056b3; 
+  background-color: #0056b3;
 }
 
 .edit-button {
-  display: block;
-  margin: 20px auto; 
-  padding: 10px 20px;
-  background-color: #fff35e; 
-  color: #000; 
-  border: none;
-  border-radius: 5px; 
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
+  background-color: #fff35e;
+  color: #000;
 }
 
 .edit-button:hover {
-  background-color: #f8e700; 
+  background-color: #f8e700;
 }
 
 .save-button {
-  display: block;
-  margin: 20px auto; 
-  padding: 10px 20px;
-  background-color: #1aff00; 
-  color: #000; 
-  border: none;
-  border-radius: 5px; 
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
+  background-color: #1aff00;
+  color: #000;
 }
 
-.save-button:hover{
+.save-button:hover {
   background-color: #14a804;
 }
 
 .delete-button {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
   background-color: #eb0101;
-  color: #000; 
-  border: none;
-  border-radius: 5px; 
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
+  color: #000;
 }
 
 .delete-button:hover {
-  background-color: #b30000; 
+  background-color: #b30000;
 }

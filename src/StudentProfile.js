@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import './StudentProfile.css';
 import image from './Assets/logo.png';
 
@@ -7,7 +8,7 @@ function ProfilePage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { student } = location.state || {};
-
+  const [recommendations, setRecommendations] = useState([]);
   const [editableStudent, setEditableStudent] = useState(student);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -76,7 +77,32 @@ function ProfilePage() {
       alert('Failed to update student.');
     }
   };
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      try {
+        const response = await fetch('http://localhost:5002/api/recommend', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(editableStudent),
+        });
 
+        if (response.ok) {
+          const recommendationsData = await response.json();
+          setRecommendations(recommendationsData);
+        } else {
+          console.error('Failed to fetch recommendations');
+        }
+      } catch (error) {
+        console.error('Error fetching recommendations:', error);
+      }
+    };
+
+    if (editableStudent) {
+      fetchRecommendations();
+    }
+  }, [editableStudent]);
   if (!editableStudent) {
     return <div>No student data available.</div>;
   }
@@ -90,77 +116,98 @@ function ProfilePage() {
         <h2>Higher Studies Students Data</h2>
       </div>
       <div className="profile-container">
-        <div className="profile-header">
-          <h1>{isEditing ? (
-            <input
-              type="text"
-              name="studentname"
-              value={editableStudent.studentname}
-              onChange={handleChange}
-            />
-          ) : (
-            editableStudent.studentname
-          )}</h1>
-        </div>
-        <div className="profile-details">
-          {Object.keys(editableStudent).map((key) => (
-            key !== 'score' && key !== '_id' && (
-              <div key={key} className='detail-row'>
-                <div className="detail-label">{key}</div>
-                <div className="detail-data">
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name={key}
-                      value={editableStudent[key]}
-                      onChange={handleChange}
-                    />
-                  ) : (
-                    editableStudent[key]
-                  )}
-                </div>
-              </div>
-            )
-          ))}
-          <div className="score">
-            <h3 className='score-heading'>score</h3>
-            {Object.entries(editableStudent.score || {}).map(([subject, score]) => (
-              <div key={subject} className='detail-row'>
-                <div className="detail-label">
-                  {subject}
-                </div>
-                <div className='detail-data'>
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      name={`score.${subject}`}
-                      value={score}
-                      onChange={handleChange}
-                    />
-                  ) : (
-                    score
-                  )}
-
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className='button'>
-          <div>
-            {isEditing ? (
-              <button onClick={handleSave} className='save-button'>Save</button>
+          <div className='profile-details-container'>
+          <div className="profile-header">
+            <h1>{isEditing ? (
+              <input
+                type="text"
+                name="studentname"
+                value={editableStudent.studentname}
+                onChange={handleChange}
+              />
             ) : (
-              <button onClick={handleEditToggle} className='edit-button'>Edit</button>
-            )}
+              editableStudent.studentname
+            )}</h1>
           </div>
-          <div>
-            <button onClick={handleReturn} className="return-button">Return to List</button>
+          <div className="profile-details">
+            {Object.keys(editableStudent).map((key) => (
+              key !== 'score' && key !== '_id' && (
+                <div key={key} className='detail-row'>
+                  <div className="detail-label">{key}</div>
+                  <div className="detail-data">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name={key}
+                        value={editableStudent[key]}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      editableStudent[key]
+                    )}
+                  </div>
+                </div>
+              )
+            ))}
+            <div className="score">
+              <h3 className='score-heading'>score</h3>
+              {Object.entries(editableStudent.score || {}).map(([subject, score]) => (
+                <div key={subject} className='detail-row'>
+                  <div className="detail-label">
+                    {subject}
+                  </div>
+                  <div className='detail-data'>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        name={`score.${subject}`}
+                        value={score}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      score
+                    )}
+
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div>
-            <button onClick={handleDelete} className='delete-button'>Delete</button>
+          <div className='button'>
+            <div>
+              {isEditing ? (
+                <button onClick={handleSave} className='save-button'>Save</button>
+              ) : (
+                <button onClick={handleEditToggle} className='edit-button'>Edit</button>
+              )}
+            </div>
+            <div>
+              <button onClick={handleReturn} className="return-button">Return to List</button>
+            </div>
+            <div>
+              <button onClick={handleDelete} className='delete-button'>Delete</button>
+            </div>
           </div>
         </div>
+        <div className="recommendations-container">
+    <div className="recommendations">
+      <h3>Recommended Colleges</h3>
+      {recommendations.length > 0 ? (
+        <ul>
+          {recommendations.map((college, index) => (
+            <li key={index}>
+              <h4>{college.college_name}</h4>
+              <p>Education Probability: {college.education_probability}</p>
+              <p>Financial Probability: {college.financial_probability}</p>
+              <p>Overall Probability: {college.overall_probability}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="no-recommendations">No recommendations available yet.</p>
+      )}
+    </div>
+  </div>
       </div>
     </>
   );
