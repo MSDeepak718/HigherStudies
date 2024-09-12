@@ -37,12 +37,12 @@ function ProfilePage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.startsWith('scores.')) {
+    if (name.startsWith('score.')) {
       const [_, subject] = name.split('.');
       setEditableStudent((prev) => ({
         ...prev,
-        scores: {
-          ...prev.scores,
+        score: {
+          ...prev.score,
           [subject]: value,
         },
       }));
@@ -55,7 +55,7 @@ function ProfilePage() {
   };
 
   const handleSave = async () => {
-    console.log('Saving data:', editableStudent); // Debugging line
+    console.log('Saving data:', editableStudent);
     try {
       const response = await fetch(`http://localhost:5002/api/data/${student._id}`, {
         method: 'PUT',
@@ -104,7 +104,7 @@ function ProfilePage() {
         </div>
         <div className="profile-details">
           {Object.keys(editableStudent).map((key) => (
-            key !== 'scores' && key !== '_id' && (
+            key !== 'score' && key !== '_id' && (
               <div key={key} className='detail-row'>
                 <div className="detail-label">{key}</div>
                 <div className="detail-data">
@@ -122,9 +122,9 @@ function ProfilePage() {
               </div>
             )
           ))}
-          <div className="scores">
-            <h3 className='score-heading'>Scores</h3>
-            {Object.entries(editableStudent.scores || {}).map(([subject, score]) => (
+          <div className="score">
+            <h3 className='score-heading'>score</h3>
+            {Object.entries(editableStudent.score || {}).map(([subject, score]) => (
               <div key={subject} className='detail-row'>
                 <div className="detail-label">
                   {subject}
@@ -133,13 +133,14 @@ function ProfilePage() {
                   {isEditing ? (
                     <input
                       type="text"
-                      name={`scores.${subject}`}
+                      name={`score.${subject}`}
                       value={score}
                       onChange={handleChange}
                     />
                   ) : (
                     score
                   )}
+
                 </div>
               </div>
             ))}

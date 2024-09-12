@@ -1,7 +1,7 @@
 .signup-page {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-image: url('./Assets/8068.jpeg'); /* Ensure the path is correct */
+    background-image: url('./Assets/8068.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

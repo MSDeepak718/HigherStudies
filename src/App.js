@@ -17,7 +17,7 @@ function App() {
   const [selectedSection, setSelectedSection] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedScores, setSelectedScores] = useState([]);
+  const [selectedscore, setSelectedscore] = useState([]);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [dropdownData, setDropdownData] = useState({
@@ -26,7 +26,7 @@ function App() {
     sections: [],
     genders: [],
     countries: [],
-    scores: [],
+    score: [],
   });
   const [sortConfigs, setSortConfigs] = useState([]);
   const dropdownRef = useRef(null);
@@ -45,8 +45,8 @@ function App() {
         const uniqueSections = [...new Set(fetchedData.map((item) => item.section))];
         const uniqueGenders = [...new Set(fetchedData.map((item) => item.gender))];
         const uniqueCountries = [...new Set(fetchedData.map((item) => item.preferredcountry))];
-        const allScores = fetchedData.flatMap((item) => Object.keys(item.scores || {}));
-        const uniqueScores = [...new Set(allScores)];
+        const allscore = fetchedData.flatMap((item) => Object.keys(item.score || {}));
+        const uniquescore = [...new Set(allscore)];
 
         setDropdownData({
           years: uniqueYears,
@@ -54,7 +54,7 @@ function App() {
           sections: uniqueSections,
           genders: uniqueGenders,
           countries: uniqueCountries,
-          scores: uniqueScores,
+          score: uniquescore,
         });
       })
       .catch((error) => {
@@ -64,7 +64,7 @@ function App() {
 
   useEffect(() => {
     let filtered = data.filter((item) => {
-      const scoreMatch = selectedScores.length === 0 || selectedScores.every((score) => item.scores?.[score]);
+      const scoreMatch = selectedscore.length === 0 || selectedscore.every((score) => item.score?.[score]);
       const searchMatch =
       item.studentname.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.studentid.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -87,13 +87,13 @@ function App() {
     if (sortConfigs.length > 0) {
       filtered = filtered.sort((a, b) => {
         for (const config of sortConfigs) {
-          const aScore = a.scores?.[config.key] || 0;
-          const bScore = b.scores?.[config.key] || 0;
+          const ascore = a.score?.[config.key] || 0;
+          const bscore = b.score?.[config.key] || 0;
 
-          if (aScore < bScore) {
+          if (ascore < bscore) {
             return config.direction === 'ascending' ? -1 : 1;
           }
-          if (aScore > bScore) {
+          if (ascore > bscore) {
             return config.direction === 'ascending' ? 1 : -1;
           }
         }
@@ -108,7 +108,7 @@ function App() {
     selectedSection,
     selectedGender,
     selectedCountry,
-    selectedScores,
+    selectedscore,
     sortConfigs,
     data, searchQuery
   ]);
@@ -130,11 +130,11 @@ function App() {
       case 'Preferred Country':
         setSelectedCountry(selectedCountry === selected ? '' : selected);
         break;
-      case 'Scores':
-        if (selectedScores.includes(selected)) {
-          setSelectedScores(selectedScores.filter((score) => score !== selected));
+      case 'score':
+        if (selectedscore.includes(selected)) {
+          setSelectedscore(selectedscore.filter((score) => score !== selected));
         } else {
-          setSelectedScores([...selectedScores, selected]);
+          setSelectedscore([...selectedscore, selected]);
         }
         break;
       default:
@@ -156,7 +156,7 @@ function App() {
       case 'Preferred Country':
         return selectedCountry || 'Preferred Country';
       case 'Scores':
-        return selectedScores.length > 0 ? selectedScores.join(', ') : 'Scores';
+        return selectedscore.length > 0 ? selectedscore.join(', ') : 'Scores';
       default:
         return '';
     }
@@ -225,8 +225,8 @@ function App() {
       case 'Preferred Country':
         setSelectedCountry('');
         break;
-      case 'Scores':
-        setSelectedScores([]);
+      case 'score':
+        setSelectedscore([]);
         break;
       default:
         break;
@@ -235,6 +235,7 @@ function App() {
   };
 
   const handleRowClick = (student) => {
+
     navigate('/profile', { state: { student } });
   };
 
@@ -309,13 +310,13 @@ function App() {
                   />
                   <Dropdown
                     buttonField={getDropdownTitle('Scores')}
-                    items={dropdownData.scores}
-                    isOpen={openDropdown === 'Scores'}
-                    toggleDropdown={() => toggleDropdown('Scores')}
-                    onSelect={(selected) => handleSelect('Scores', selected)}
-                    resetDropdown={() => resetDropdown('Scores')}
-                    dropdownClass={getDropdownClass('Scores')}
-                    style={getDropdownStyle('Scores')}
+                    items={dropdownData.score}
+                    isOpen={openDropdown === 'score'}
+                    toggleDropdown={() => toggleDropdown('score')}
+                    onSelect={(selected) => handleSelect('score', selected)}
+                    resetDropdown={() => resetDropdown('score')}
+                    dropdownClass={getDropdownClass('score')}
+                    style={getDropdownStyle('score')}
                   />
                 </div>
               </div>
@@ -359,7 +360,7 @@ function App() {
                 <span  onClick={() => requestSort('preferredcountry')}>
                   Preferred Country
                 </span>
-                {selectedScores.map((score) => (
+                {selectedscore.map((score) => (
                   <span key={score} className="sortable-header" onClick={() => requestSort(score)}>
                     {score}
                   </span>
@@ -380,8 +381,8 @@ function App() {
                     <span>{item.preferreddegree}</span>
                     <span>{item.preferredcourse}</span>
                     <span>{item.preferredcountry}</span>
-                    {selectedScores.map((score) => (
-                      <span key={score}>{item.scores?.[score] || '-'}</span>
+                    {selectedscore.map((score) => (
+                      <span key={score}>{item.score?.[score] || '-'}</span>
                     ))}
                   </div>
                 ))}

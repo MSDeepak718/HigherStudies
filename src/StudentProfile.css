@@ -1,14 +1,10 @@
-/* Reset some default styles */
 
-
-/* Basic container styling */
 .profile-container {
   padding: 20px;
   margin: 0 auto; 
   max-width: 600px; 
 }
 
-/* Additional styling for profile elements */
 .profile-header {
   background-color: #FFF35E;
   border-radius: 12px;
@@ -17,9 +13,9 @@
 }
 
 .profile-details {
-  background-color: #fff; /* Optional: background for profile details */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  background-color: #fff; 
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
 }
 

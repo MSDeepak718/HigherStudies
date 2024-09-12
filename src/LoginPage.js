@@ -10,7 +10,6 @@ function LoginPage() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    // Reset form fields when the component mounts or navigates to this page
     useEffect(() => {
         setUsername('');
         setPassword('');

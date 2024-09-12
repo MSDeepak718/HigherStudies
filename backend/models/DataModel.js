@@ -11,7 +11,7 @@ const DataSchema = new mongoose.Schema({
         required: true
     },
     year: {
-        type: Number,
+        type: String,
         required: true
     },
     department: {
@@ -46,7 +46,7 @@ const DataSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    scores: {
+    score: {
         type: Map,
         of: Number
     }
