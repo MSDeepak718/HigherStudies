@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: .
+    container_name: college_eligibility_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/backend
+    environment:
+      - PYTHONUNBUFFERED=1

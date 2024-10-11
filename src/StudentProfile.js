@@ -8,9 +8,18 @@ function ProfilePage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { student } = location.state || {};
+  const [loading,setLoading] = useState(true)
   const [recommendations, setRecommendations] = useState([]);
   const [editableStudent, setEditableStudent] = useState(student);
   const [isEditing, setIsEditing] = useState(false);
+
+
+  // Initialize variables
+  const maxfee = student?.maxfee || 0; // Set a default or pull from student object
+  const cgpa = student?.cgpa || 0;
+  const preferredcountry = student?.preferredcountry || ""; // Default or from student
+  const preferreddegree = student?.preferreddegree || ""; // Default or from student
+  const score = student?.score || {}; // Ensure score exists
 
   const handleReturn = () => {
     navigate('/app');
@@ -79,30 +88,52 @@ function ProfilePage() {
   };
   useEffect(() => {
     const fetchRecommendations = async () => {
+      setLoading(true);
       try {
-        const response = await fetch('http://localhost:5002/api/recommend', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(editableStudent),
-        });
-
-        if (response.ok) {
+          const response = await fetch('http://localhost:8000/predict-eligible-colleges/', { 
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                PROGRAM: 1,
+                TUTION_FEE: parseInt(maxfee, 10), // Convert to integer
+                SCHOLARSHIP_AVAL: 1,
+                PROGRAM_DURATION: 4,
+                COUNTRY: 1, // Example country code
+                LIVING_COST: 15000,
+                ALUMINI_NETWORK: 1,
+                GATE_SCORE: parseInt(score.gatescore, 10),
+                GRE_SCORE: parseInt(score.grescore, 10),
+                TOEFL_SCORE: parseInt(score.toeflscore, 10),
+                IELTS_SCORE: parseInt(score.ieltsscore, 10),
+                GMAT_SCORE: parseInt(score.gmatscore, 10),
+                SAT_SCORE: parseInt(score.satscore, 10),
+                CGPA: cgpa,
+                DEGREE: 1, // Example degree code
+                MAJOR: 1,
+                ACHIVEMENT: 1,
+                PROJECTS: 2,
+                N_PAPERS: 1,
+            }),
+          });
           const recommendationsData = await response.json();
-          setRecommendations(recommendationsData);
-        } else {
-          console.error('Failed to fetch recommendations');
-        }
+          console.log("Recommendations Data:", recommendationsData);  // Log the data
+          if (response.ok) {
+              setRecommendations(recommendationsData.eligible_colleges);  // Ensure you're accessing the correct property
+          } else {
+              console.error('Failed to fetch recommendations');
+          }
       } catch (error) {
-        console.error('Error fetching recommendations:', error);
+          console.error('Error fetching recommendations:', error);
+      }finally{
+        setLoading(false);
       }
-    };
+  };  
+    fetchRecommendations();
+}, [editableStudent]);
 
-    if (editableStudent) {
-      fetchRecommendations();
-    }
-  }, [editableStudent]);
+
   if (!editableStudent) {
     return <div>No student data available.</div>;
   }
@@ -190,24 +221,24 @@ function ProfilePage() {
           </div>
         </div>
         <div className="recommendations-container">
-    <div className="recommendations">
-      <h3>Recommended Colleges</h3>
-      {recommendations.length > 0 ? (
-        <ul>
-          {recommendations.map((college, index) => (
-            <li key={index}>
-              <h4>{college.college_name}</h4>
-              <p>Education Probability: {college.education_probability}</p>
-              <p>Financial Probability: {college.financial_probability}</p>
-              <p>Overall Probability: {college.overall_probability}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="no-recommendations">No recommendations available yet.</p>
-      )}
-    </div>
-  </div>
+          <div className="recommendations">
+              <h3>Recommended Colleges</h3>
+              {recommendations.length > 0 ? (
+                  <ul>
+                      {recommendations.map((college, index) => (
+                          <li key={index}>
+                              <h4>{college.college_name}</h4>
+                              <p>Eligibility Percentage: {college.ELIGIBILITY_PERCENTAGE}</p>
+                              <p>Financial Probablity: {college.financial_percentage}</p>
+                              <p>Academic Probablity: {college.academic_percentage}</p>
+                          </li>
+                      ))}
+                  </ul>
+              ) : (
+                  <div className="no-recommendations">{loading ? (<p>Loading...</p>) : (<p>No recommendations available yet.</p>)}</div>
+              )}
+          </div>
+        </div>
       </div>
     </>
   );

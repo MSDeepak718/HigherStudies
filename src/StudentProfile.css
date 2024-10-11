@@ -5,6 +5,10 @@
 }
 
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 .profile-details-container,
 .recommendations-container {
   scrollbar-width: none;
@@ -20,6 +24,7 @@
   display: flex;
   justify-content: space-evenly; 
   padding: 20px;
+  gap: 100px;
   margin: 0 auto;
   max-width: 1200px;
   max-height: 100vh; 

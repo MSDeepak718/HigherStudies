@@ -2,7 +2,7 @@ import argparse
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import cosine_similarity
-import joblib  # For saving and loading models
+import joblib  
 
 def load_data(students_path: str, colleges_path: str) -> tuple:
     """Load student and college data from CSV files."""
@@ -67,24 +67,20 @@ def calculate_matching_probabilities(user_row: pd.Series, college_df: pd.DataFra
         if col not in user_df.columns:
             user_df[col] = 0
 
-    # Normalize user data
     user_df[numerical_columns_students] = scaler_students.transform(user_df[numerical_columns_students])
 
-    # Ensure college data has the necessary columns
     for col in numerical_columns_colleges:
         if col not in college_df.columns:
             college_df[col] = 0
 
-    # Calculate similarity scores
     similarities = cosine_similarity(user_df[numerical_columns_students], college_df[numerical_columns_colleges])
     college_df['education_probability'] = similarities.flatten()
 
-    # Calculate financial probability based on affordability
-    user_max_tuition = user_row.get('maximum_tuitionfee_affordable', 0)  # Default to 0 if not present
+    user_max_tuition = user_row.get('maximum_tuitionfee_affordable', 0)  
     college_df['financial_probability'] = college_df['tuition_fee_per_year'].apply(
-        lambda x: max(0, 1 - abs(x - user_max_tuition) / user_max_tuition))
+        lambda x: max(0, 1 - abs(x - user_max_tuition) / max(user_max_tuition, 1))
+    )
 
-    # Calculate overall probability
     college_df['overall_probability'] = college_df['education_probability'] * 0.6 + college_df['financial_probability'] * 0.4
 
     return college_df
