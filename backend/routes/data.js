@@ -22,6 +22,8 @@ router.post('/', async (req, res) => {
         console.log('New student added:', savedStudent); // Debugging line
         res.status(201).json(savedStudent); // Respond with the created student and status code 201
     } catch (err) {
+
+        console.error("Error adding student:", err);
         res.status(400).json({ message: err.message }); // Respond with a 400 status code if there's an error
     }
 });

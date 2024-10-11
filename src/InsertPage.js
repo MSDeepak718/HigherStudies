@@ -1,11 +1,11 @@
-
 import React, { useState } from "react";
 import axios from "axios"; // You can use axios or fetch for making HTTP requests
 import image from './Assets/logo.png'
+import './InsertPage.css'
 
 function InsertPage() {
   const [editableStudent, setEditableStudent] = useState({
-    studentid:"",
+    studentid: "",
     studentname: "",
     year: "",
     department: "",
@@ -18,8 +18,8 @@ function InsertPage() {
     preferredcountry: "",
     scores: {
         gatescore: "",
-        ieltsscore:"",
-        grescore:""
+        ieltsscore: "",
+        grescore: ""
     },
   });
 
@@ -43,6 +43,8 @@ function InsertPage() {
   };
 
   const handleSubmit = async () => {
+
+    console.log("Submitting student:", editableStudent);
     try {
         const response = await axios.post("http://localhost:5002/api/data", editableStudent);
       if (response.status === 201) {
@@ -62,8 +64,8 @@ function InsertPage() {
           preferredcountry: "",
           scores: {
             gatescore: "",
-            ieltsscore:"",
-            grescore:""
+            ieltsscore: "",
+            grescore: ""
           },
         });
       }
@@ -75,69 +77,68 @@ function InsertPage() {
 
   return (
     <>
-        <div className="header">
-              <img src={image} alt="logo" />
-            </div>
-            <div className="title">
-              <h2>Add Students who are Interested in Higher Studies</h2>
-            </div>
-        <div className="profile-container">
-        <div className="profile-header">
-            <h1>
+      <div className="header">
+        <img src={image} alt="logo" />
+      </div>
+      <div className="title">
+        <h2>Add Students Interested in Higher Studies</h2>
+      </div>
+      <div className="form-container">
+        <div className="input-field student-name">
+          <h1>
             <input
-                type="text"
-                name="studentname"
-                value={editableStudent.studentname}
-                onChange={handleChange}
-                placeholder="Student Name"
+              type="text"
+              name="studentname"
+              value={editableStudent.studentname}
+              onChange={handleChange}
+              placeholder="Student Name"
             />
-            </h1>
+          </h1>
         </div>
-        <div className="profile-details">
-            {Object.keys(editableStudent).map(
+        <div className="input-fields-container">
+          {Object.keys(editableStudent).map(
             (key) =>
-                key !== "scores" &&
-                key !== "_id" && (
-                <div key={key} className="detail-row">
-                    <div className="detail-label">{key}</div>
-                    <div className="detail-data">
-                    <input
-                        type="text"
-                        name={key}
-                        value={editableStudent[key]}
-                        onChange={handleChange}
-                        placeholder={`Enter ${key}`}
-                    />
-                    </div>
+              key !== "scores" && key !== "_id" && (
+                <div key={key} className="input-field">
+                  <label className="field-label">{key}</label>
+                  <input
+                    type="text"
+                    name={key}
+                    value={editableStudent[key]}
+                    onChange={handleChange}
+                    placeholder={`Enter ${key}`}
+                    className="input-box"
+                  />
                 </div>
-                )
-            )}
-            <div className="scores">
-            <h3 className="score-heading">Scores</h3>
-            {Object.entries(editableStudent.scores || {}).map(
-                ([subject, score]) => (
-                <div key={subject} className="detail-row">
-                    <div className="detail-label">{subject}</div>
-                    <div className="detail-data">
-                    <input
-                        type="text"
-                        name={`scores.${subject}`}
-                        value={score}
-                        onChange={handleChange}
-                        placeholder={`Enter score for ${subject}`}
-                    />
-                    </div>
-                </div>
-                )
-            )}
-            </div>
+              )
+          )}
         </div>
-        <div className="button">
-            <button className="return-button" onClick={handleSubmit}>
-                Add Student
-            </button>
+
+        <div className="scores-section">
+          <h3 className="scores-title">Scores</h3>
+          {Object.entries(editableStudent.scores || {}).map(
+            ([subject, score]) => (
+              <div key={subject} className="input-field">
+                <label className="field-label">{subject}</label>
+                <input
+                  type="text"
+                  name={`scores.${subject}`}
+                  value={score}
+                  onChange={handleChange}
+                  placeholder={`Enter score for ${subject}`}
+                  className="input-box"
+                />
+              </div>
+            )
+          )}
         </div>
+
+        <div className="submit-button-container">
+          <button className="submit-button" onClick={handleSubmit}>
+            Add Student
+          </button>
         </div>
+      </div>
     </>
   );
 }

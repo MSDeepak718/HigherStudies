@@ -1,0 +1,138 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.header-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: #000066;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+}
+
+/* Form Container Styles */
+.form-container {
+    background-color: white;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .form-container:hover {
+    transform: translateY(-5px); /* Slight lift effect */
+    border-color: #FFF35E; /* Border highlight on hover */
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15); /* Elevated shadow on hover */
+  }
+  
+  /* Input Field Styles */
+  .input-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .field-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000066;
+    width: 40%; /* Flex: left column for labels */
+    text-transform: uppercase; /* Capitalize all labels */
+  }
+  
+  .input-box {
+    width: 55%; /* Flex: right column for inputs */
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #000066;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .input-box:focus {
+    border-color: #FFF35E;
+    box-shadow: 0px 0px 5px #FFF35E;
+    background-color: #f0f8ff; /* Subtle background change on focus */
+    outline: none;
+  }
+  
+  /* Specific Styling for Student Name */
+  .student-name input {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: 2px solid #000066;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .student-name input {
+    margin-left: 150px;
+    background-color: #f0f8ff;
+    width: 250px; /* Subtle background change on focus */
+    outline: none;
+  }
+  .student-name input:focus {
+    margin-left: 150px;
+    border-color: #FFF35E;
+    box-shadow: 0px 0px 5px #FFF35E;
+    background-color: #f0f8ff; /* Subtle background change on focus */
+    outline: none;
+  }
+  
+  /* Scores Section */
+  .scores-section {
+    margin-top: 30px;
+  }
+  
+  .scores-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #000066;
+    margin-bottom: 15px;
+    border-bottom: 3px solid #FFF35E;
+    padding-bottom: 10px;
+  }
+  
+  .scores-section .input-field {
+    margin-bottom: 20px;
+  }
+  
+  /* Submit Button */
+  .submit-button-container {
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .submit-button {
+    background-color: #000066;
+    color: #FFF35E;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #FFF35E;
+    color: #000066;
+    transform: translateY(-3px); /* Button lift effect */
+  }

@@ -27,8 +27,7 @@ const DataSchema = new mongoose.Schema({
         required: true
     },
     maxfee:{
-        type:Number,
-        required:true
+        type:Number
     },
     emailid: {
         type: String,
@@ -51,16 +50,13 @@ const DataSchema = new mongoose.Schema({
         required: true
     },
     cgpa:{
-        type:Number,
-        required:true
+        type:Number
     },
     numberofresearchpapers:{
-        type:Number,
-        required:true
+        type:Number
     },
     numberofprojects:{
-        type:Number,
-        required:true
+        type:Number
     },
     score: {
         type: Map,
