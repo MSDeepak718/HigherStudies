@@ -208,3 +208,6 @@
 .delete-button:hover {
   background-color: #b30000;
 }
+.pie-chart-container{
+  padding: 10px;
+}

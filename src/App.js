@@ -143,7 +143,18 @@ function App() {
     }
     toggleDropdown(type);
   };
-
+  const handleStartStreamlit = async () => {
+    try {
+      const response = await fetch("http://localhost:5002/start-streamlit");
+      if (response.ok) {
+        alert("Streamlit started successfully!");
+      } else {
+        alert("Failed to start Streamlit.");
+      }
+    } catch (error) {
+      alert("Error starting Streamlit.");
+    }
+  };
   const getDropdownTitle = (type) => {
     switch (type) {
       case 'Year':
@@ -330,7 +341,7 @@ function App() {
               </div>
               <div className='buttons'>
                 <div className='button-container'>
-                  <button className='glow-button'>Chat with Kutty AI</button>
+                  <button className='glow-button' onClick={handleStartStreamlit}>Chat with Kutty AI</button>
                 </div>
                 <div className="search-bar">
                   <input
@@ -339,7 +350,7 @@ function App() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                </div>
+              </div>
               </div>
             </div>
             <div className="table-container">

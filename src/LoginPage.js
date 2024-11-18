@@ -43,7 +43,6 @@ function LoginPage() {
             alert("Error logging in");
         }
     };
-
     const handleSignupClick = () => {
         navigate('/signup');
     };

@@ -18,7 +18,19 @@ app.use(express.json());
 app.get('/app', authMiddleware, (req, res) => {
     res.send('Welcome to the main page');
 });
-
+app.get("/start-streamlit", (req, res) => {
+    exec("cd kutty && cd src && streamlit run app.py", (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error: ${error.message}`);
+          return;
+        }
+        if (stderr) {
+          console.error(`stderr: ${stderr}`);
+          return;
+        }
+        console.log(`stdout: ${stdout}`);
+      });
+  });
 app.use(cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],

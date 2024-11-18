@@ -49,7 +49,6 @@ color:white;
   font-size: 28px;
   font-weight: 500;
   letter-spacing: 0.3cap;
-  text-align: center;
 }
 
 .filter {
@@ -81,6 +80,7 @@ color:white;
 .buttons{
   display: flex;
   justify-content: space-between;
+  gap:20px;
 }
 .filter2{
   display: flex;
@@ -199,6 +199,7 @@ color:white;
 .footer .button-container {
   display: flex;
   justify-content: center;
+  gap:20px;
   align-items: center;
 }
 
