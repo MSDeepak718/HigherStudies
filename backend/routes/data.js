@@ -3,7 +3,6 @@ const DataModel = require('../models/DataModel');
 const { ObjectId } = require('mongoose').Types; // Import ObjectId
 const router = express.Router();
 
-// Get all students
 router.get('/', async (req, res) => {
     try {
         const data = await DataModel.find();
@@ -13,7 +12,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Add a new student
 router.post('/', async (req, res) => {
     console.log('Received post request with data:', req.body); // Debugging line
     try {

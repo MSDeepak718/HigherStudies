@@ -46,7 +46,9 @@ function LoginPage() {
     const handleSignupClick = () => {
         navigate('/signup');
     };
-
+    const handleForgotPassword = () =>{
+        navigate('/forgotPassword');
+    }
     return (
         <div className="login-page">
             <div className="login-container">
@@ -84,7 +86,7 @@ function LoginPage() {
                             required
                         />
                     </div>
-                    <div className="forgot-password">
+                    <div className="forgot-password" onClick={handleForgotPassword}>
                         <p>Forgot password?</p>
                     </div>
                 </div>

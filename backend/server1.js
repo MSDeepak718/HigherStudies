@@ -55,6 +55,26 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.post('/confirm-password', async (req, res) => {
+  const { email, newPassword } = req.body;
+  console.log(email+" "+newPassword);
+  try {
+    const user = await Register.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: 'User does not exist' });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (err) {
+    console.error('Error updating password:', err);
+    res.status(500).json({ error: 'Error updating password' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

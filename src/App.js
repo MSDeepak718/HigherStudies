@@ -9,6 +9,7 @@ import image from './Assets/logo.png';
 import Loginpage from './LoginPage.js';
 import Signup from './Signup.js';
 import InsertPage from './InsertPage.js';
+import ForgotPassword from './ForgotPassword.js';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -256,6 +257,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Loginpage />} />
+      <Route path="/forgotPassword" element={<ForgotPassword/>}/>
       <Route path="/signup" element={<Signup />}/>
       <Route
 
