@@ -1,0 +1,311 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: white;
+}
+
+.header {
+  background-color: #000066;
+}
+.filter2 .addstudent-button{
+  padding:10px 30px;
+  border-radius: 25px;
+  border:0px;
+  background: #1aff00;
+  color:black;
+  font-weight:500;
+  font-size: 16px;
+}
+.filter2 .addstudent-button:hover{
+padding:10px 30px;
+cursor: pointer;
+transform: translateY(-2px);
+transition: all 0.4s ease;
+border-radius: 25px;
+border:0px;
+font-weight: 500;
+background:  #14a804;
+color:white;
+
+}
+.header img {
+  max-width: 300px;
+  padding: 25px;
+}
+
+.title {
+  background-color: #FFF35E;
+  color: #000;
+  margin-top: 35px;
+}
+
+.title h2 {
+  padding: 20px;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.3cap;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 35px;
+  padding: 25px;
+}
+
+.filter .params {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.filter h4 {
+  color: #737373;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.filterify {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  gap:20px;
+}
+.filter2{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+}
+
+.glow-button {
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.glow-button::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  z-index: -1;
+  filter: blur(7px);
+  opacity: 0.65;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.glow-button:hover::before {
+  opacity: 1;
+  background: linear-gradient(45deg, #00f, #0ff, #f0f, rgb(200, 0, 255));
+}
+
+.search-bar input {
+  width: 300px;
+  float: inline-end;
+  border: 2px solid #5e5e5e;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.search-bar input:hover{
+  border: 2px solid #000;
+}
+
+.table-container {
+  width: 100%;
+  margin-top: 45px;
+}
+
+.table-header {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  color: #000;
+  font-weight: 500;
+  background-color: #f0f0f0;
+  border-bottom: 3px solid #D8D8D8;
+}
+
+.scrollable-list {
+  width: 100%;
+  max-height: 500px; 
+  overflow-y: auto;
+}
+
+.list-item {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  color: #5e5e6d;
+  border-bottom: 1px solid #d8d8d8;
+  padding: 15px 0px;
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background-color: rgba(255, 244, 94, 0.5);
+  color: #000;
+}
+
+.table-header span, .list-item span {
+  display: table-cell;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+  width: auto;
+  box-sizing: border-box;
+}
+
+.footer {
+  background-color: #000066;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.footer h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.footer .button-container {
+  display: flex;
+  justify-content: center;
+  gap:20px;
+  align-items: center;
+}
+
+.footer .glow {
+  background-color: #FFD700;
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+.footer .glow::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  background: linear-gradient(45deg, #ff0, #f0f, #f00, #0ff);
+  border-radius: 12px;
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.footer .glow:hover::before {
+  opacity: 1;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .table-header span:not(.student-id):not(.student-name),
+  .list-item span:not(.student-id):not(.student-name) {
+    display: none;
+  }
+
+  .button-container button{
+    font-size: 0.9rem;
+    padding: 8px 20px;
+  }
+
+  .search-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 14px;
+ }
+
+  .search-bar input {
+    width: 100%;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-header span:not(.student-id):not(.student-name),
+  .list-item span:not(.student-id):not(.student-name) {
+    display: none;
+  }
+
+  .filter {
+    display: none;
+  }
+
+  .button-container button{
+    font-size: 0.8rem;
+    padding: 8px 15px;
+  }
+
+  .search-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 12px;
+ }
+
+  .search-bar input {
+    width: 100%;
+    margin: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-header span:not(.student-id):not(.student-name),
+  .list-item span:not(.student-id):not(.student-name) {
+    display: none;
+  }
+
+  .filter {
+    display: none;
+  }
+
+  .search-bar{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-left: 10px;
+  }
+  .search-bar input {
+    width: 100%;
+  }
+}
