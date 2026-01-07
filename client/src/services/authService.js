@@ -1,13 +1,20 @@
-import { AUTH_BASE_URL } from '../config';
+import { API_BASE_URL } from '../config';
 
 const authService = {
+  async fetchUser() {
+    const res = await fetch(`${API_BASE_URL}/auth`, {
+      credentials: "include"
+    });
+    if(res.status===401) return null;
+    return await res.json();
+  }
+  ,
   async login(email, password) {
     try {
-      const response = await fetch(`${AUTH_BASE_URL}/login`, {
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        credentials: "include",
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
@@ -20,7 +27,7 @@ const authService = {
 
   async signup(email, password) {
     try {
-      const response = await fetch(`${AUTH_BASE_URL}/signup`, {
+      const response = await fetch(`${API_BASE_URL}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,14 +42,22 @@ const authService = {
     }
   },
 
-  async confirmPassword(email, newPassword) {
+  async logout() {
+    await fetch(`${API_URL}/logout`, {
+      method: "POST",
+      credentials: "include"
+    });
+  },
+
+  async confirmPassword(newPassword) {
     try {
-      const response = await fetch(`${AUTH_BASE_URL}/confirm-password`, {
+      const response = await fetch(`${API_BASE_URL}/pwd-reset`, {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, newPassword }),
+        body: JSON.stringify({ newPassword }),
       });
       const data = await response.json();
       return { success: response.ok, data };

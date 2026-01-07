@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import authService from "../../services/authService";
 import './Signup.css';
 
 function Signup() {
@@ -31,14 +32,12 @@ function Signup() {
     try {
       const result = await authService.signup(email, password);
       if (result.success) {
-        localStorage.setItem('token', result.data.token);
-        navigate('/app');
+        navigate('/login');
         alert("Signed Up Successfully");
       } else {
         alert(result.data.error);
       }
     } catch (error) {
-      console.error('Signup Error', error);
       alert("Error signing up. Please try again.");
     }
   };
