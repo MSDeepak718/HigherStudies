@@ -2,9 +2,7 @@ import { Router } from 'express';
 import RegisterModel from './model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
-dotenv.config();
 const router = Router();
 const secret = process.env.SECRET;
 

@@ -11,6 +11,9 @@ export function AuthProvider({children}) {
         authService.fetchUser().then(u => {
             setUser(u);
             setLoading(false);
+        }).catch(err => {
+            console.error('Failed to fetch user:', err);
+            setLoading(false);
         });
     }, []);
 

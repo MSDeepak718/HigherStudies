@@ -17,9 +17,9 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/pwd-reset" element={<ForgotPassword />} />
-          <Route path="/app" element={<Dashboard />} />
-          <Route path="/create" element={<CreateProfile />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/app" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/create" element={<ProtectedRoute><CreateProfile /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </AuthProvider>

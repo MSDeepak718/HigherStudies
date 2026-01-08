@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 
 import dataRoutes from './data/api.js';
 import authRoutes from './auth/api.js';
+import broadcastRoutes from './broadcast/api.js';
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ function authMiddleware(req, res, next) {
 
 app.use(authRoutes);
 app.use(authMiddleware, dataRoutes);
+app.use(authMiddleware, broadcastRoutes);
 
 connect(process.env.MONGODB_URI, {
     connectTimeoutMS:30000,

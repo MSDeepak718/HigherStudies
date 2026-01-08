@@ -5,6 +5,7 @@ import Filter from '../../components/Filter/Filter';
 import Header from '../../components/Header/Header';
 import Search from '../../components/Search/Search';
 import Table from '../../components/Table/Table';
+import BroadcastModal from '../../components/BroadcastModal/BroadcastModal';
 import apiService from '../../services/apiService';
 
 function Dashboard() {
@@ -27,6 +28,7 @@ function Dashboard() {
     score: [],
   });
   const [sortConfigs, setSortConfigs] = useState([]);
+  const [isBroadcastModalOpen, setIsBroadcastModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -251,6 +253,14 @@ function Dashboard() {
     navigate('/profile', { state: { student } });
   };
 
+  const handleBroadcastClick = () => {
+    if (filteredData.length === 0) {
+      alert('No students to send broadcast to. Please adjust your filters.');
+      return;
+    }
+    setIsBroadcastModalOpen(true);
+  };
+
   return (
     <>
       <Header/>
@@ -292,11 +302,17 @@ function Dashboard() {
       />
       <div className='footer'>
         <h4>Broadcast Message</h4>
-        <p>Send a broadcast message to all filtered students instantly.</p>
+        <p>Send a broadcast message to all filtered students ({filteredData.length} student(s)) instantly.</p>
         <div className='button-container'>
-          <button className='glow'>Send Broadcast Message</button>
+          <button className='glow' onClick={handleBroadcastClick}>Send Broadcast Message</button>
         </div>
       </div>
+      
+      <BroadcastModal 
+        isOpen={isBroadcastModalOpen}
+        onClose={() => setIsBroadcastModalOpen(false)}
+        filteredData={filteredData}
+      />
     </>
   );
 }

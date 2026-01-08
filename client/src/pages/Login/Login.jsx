@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../authContext";
 import authService from "../../services/authService";
 import google from '../../assets/google.png';
 import facebook from '../../assets/facebook.png';
@@ -10,6 +11,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   useEffect(() => {
     setUsername('');
@@ -27,9 +29,9 @@ function Login() {
     try {
       const result = await authService.login(username, password);
       if (result.success) {
-        localStorage.setItem('token', result.data.token);
-        navigate('/app');
+        setUser(result.data.user);
         alert("Logged in Successfully");
+        navigate('/app');
       } else {
         alert(result.data.error);
       }
